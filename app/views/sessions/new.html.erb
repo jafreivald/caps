@@ -1,0 +1,19 @@
+<%#
+# File Created by Joseph Freivald
+# Copyright (c) 2015
+# All Rights Reserved. Use pursuant to Joseph Freivald's instructions.
+%>
+<%= form_tag sessions_path do %>
+  <div class="field">
+      <%= label_tag :userid %><br />
+      <%= text_field_tag :userid, params[:userid] %>
+  </div>
+  <div class="field">
+      <%= label_tag :password %><br />
+      <%= password_field_tag :password %>
+  </div>
+  <div class="actions">
+      <%= submit_tag "Log In" %>
+  </div>
+<% end %>
+

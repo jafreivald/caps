@@ -1,0 +1,23 @@
+<h1>Listing phone_providers</h1>
+
+<table>
+  <tr>
+    <th>Phone provider</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @phone_providers.each do |phone_provider| %>
+  <tr>
+    <td><%= phone_provider.phone_provider %></td>
+    <td><%= link_to 'Show', phone_provider %></td>
+    <td><%= link_to 'Edit', edit_phone_provider_path(phone_provider) %></td>
+    <td><%= link_to 'Destroy', phone_provider, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Phone provider', new_phone_provider_path %>

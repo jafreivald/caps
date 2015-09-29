@@ -20,10 +20,11 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
-
+  username: caps
+  
 development:
   <<: *default
-  database: team-27-rails_development
+  database: caps_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -32,7 +33,7 @@ development:
   #username: team-27-rails
 
   # The password associated with the postgres role (username).
-  #password:
+  password: h&4ghaZ
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -57,8 +58,9 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: team-27-rails_test
-
+  database: caps_test
+  password: h&4ghaZ
+  
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -80,6 +82,5 @@ test:
 #
 production:
   <<: *default
-  database: team-27-rails_production
-  username: team-27-rails
-  password: <%= ENV['TEAM-27-RAILS_DATABASE_PASSWORD'] %>
+  database: caps_production
+  password: <%= ENV['CAPS_DATABASE_PASSWORD'] %>

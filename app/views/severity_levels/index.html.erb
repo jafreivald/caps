@@ -1,0 +1,23 @@
+<h1>Listing severity_levels</h1>
+
+<table>
+  <tr>
+    <th>Severity level</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @severity_levels.each do |severity_level| %>
+  <tr>
+    <td><%= severity_level.severity_level %></td>
+    <td><%= link_to 'Show', severity_level %></td>
+    <td><%= link_to 'Edit', edit_severity_level_path(severity_level) %></td>
+    <td><%= link_to 'Destroy', severity_level, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Severity level', new_severity_level_path %>

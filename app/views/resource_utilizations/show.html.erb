@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Resource:</b>
+  <%= @resource_utilization.resource %>
+</p>
+
+<p>
+  <b>Fhir base url:</b>
+  <%= @resource_utilization.fhir_base_url %>
+</p>
+
+
+<%= link_to 'Edit', edit_resource_utilization_path(@resource_utilization) %> |
+<%= link_to 'Back', resource_utilizations_path %>

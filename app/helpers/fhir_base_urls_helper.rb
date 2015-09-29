@@ -1,0 +1,2 @@
+module FhirBaseUrlsHelper
+end

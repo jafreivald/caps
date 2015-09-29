@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Role:</b>
+  <%= @role_definition.role %>
+</p>
+
+<p>
+  <b>Profile:</b>
+  <%= @role_definition.profile %>
+</p>
+
+<p>
+  <b>Resource utilization:</b>
+  <%= @role_definition.resource_utilization %>
+</p>
+
+
+<%= link_to 'Edit', edit_role_definition_path(@role_definition) %> |
+<%= link_to 'Back', role_definitions_path %>

@@ -1,0 +1,21 @@
+<%= form_for(@severity_level) do |f| %>
+  <% if @severity_level.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@severity_level.errors.count, "error") %> prohibited this severity_level from being saved:</h2>
+
+      <ul>
+      <% @severity_level.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :severity_level %><br />
+    <%= f.text_field :severity_level %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

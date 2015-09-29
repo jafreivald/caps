@@ -1,4 +1,55 @@
 CAPS::Application.routes.draw do
+  
+  resources :activities
+
+
+  resources :contact_numbers
+
+
+  resources :phone_numbers
+
+
+  resources :role_definitions
+
+
+  resources :resource_utilizations
+
+
+  resources :activity_types
+
+
+  resources :contact_methods
+
+
+  resources :fhir_base_urls
+
+
+  resources :phone_providers
+
+
+  resources :phone_types
+
+
+  resources :resources
+
+
+  resources :roles
+
+
+  resources :severity_levels
+
+
+  resources :update_actions
+
+
+  get 'signup', to: 'profiles#new', as: 'signup'
+  get 'login', to: 'sessions#new', as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
+  
+  resources :profiles
+  resources :sessions
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +99,7 @@ CAPS::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

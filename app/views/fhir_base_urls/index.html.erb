@@ -1,0 +1,23 @@
+<h1>Listing fhir_base_urls</h1>
+
+<table>
+  <tr>
+    <th>Fhir base url</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @fhir_base_urls.each do |fhir_base_url| %>
+  <tr>
+    <td><%= fhir_base_url.fhir_base_url %></td>
+    <td><%= link_to 'Show', fhir_base_url %></td>
+    <td><%= link_to 'Edit', edit_fhir_base_url_path(fhir_base_url) %></td>
+    <td><%= link_to 'Destroy', fhir_base_url, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Fhir base url', new_fhir_base_url_path %>
