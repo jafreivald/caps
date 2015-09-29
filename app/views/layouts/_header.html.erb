@@ -5,18 +5,35 @@
 %>
 
 <html>
-<head>
-  <title>CAPS</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-    <h1>CAPS</h1>
-<% if current_profile %>
-  Logged in as <%= current_profile.first_name + " " + current_profile.last_name %>
-  <%= link_to "Log Out", logout_path %>
-<% else %>
-  <%= link_to "Log In", login_path %> or 
-  <%= link_to "Create New Account", signup_path %>
-<% end %>
+    <head>
+        <title>CAPS</title>
+        <%= stylesheet_link_tag    "application", :media => "all" %>
+        <%= javascript_include_tag "application" %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <h1>CAPS</h1>
+        <div id="admin_menu">
+            <%= link_to "Activities", activities_path %>
+            <%= link_to "Activity Types", activity_types_path %>
+            <%= link_to "Contact Methods", contact_methods_path %>
+            <%= link_to "Contact Nubmers", contact_numbers_path %>
+            <%= link_to "FHIR Base URLs", fhir_base_urls_path %>
+            <%= link_to "Phone Numbers", phone_numbers_path %>
+            <%= link_to "Phone Providers", phone_providers_path %>
+            <%= link_to "Phone Types", phone_types_path %>
+            <%= link_to "Profiles", profiles_path %>
+            <%= link_to "Resources", resources_path %>
+            <%= link_to "Resource Utilizations", resource_utilizations_path %>
+            <%= link_to "Roles", roles_path %>
+            <%= link_to "Role Definitions", role_definitions_path %>
+            <%= link_to "Severity Levels", severity_levels_path %>
+            <%= link_to "Update Actions", update_actions_path %>
+        </div>
+        <% if current_profile %>
+          Logged in as <%= current_profile.first_name + " " + current_profile.last_name %>
+          <%= link_to "Log Out", logout_path %>
+        <% else %>
+          <%= link_to "Log In", login_path %> or 
+          <%= link_to "Create New Account", signup_path %>
+        <% end %>

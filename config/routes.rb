@@ -1,5 +1,11 @@
 CAPS::Application.routes.draw do
   
+  resources :activity_updates
+
+
+  resources :actions
+
+
   resources :activities
 
 

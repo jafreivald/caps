@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150929024905) do
+ActiveRecord::Schema.define(:version => 20150929030422) do
+
+  create_table "actions", :force => true do |t|
+    t.string   "action"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "actions", ["action"], :name => "index_actions_on_action", :unique => true
 
   create_table "activities", :force => true do |t|
     t.string   "base_time"
@@ -34,6 +42,19 @@ ActiveRecord::Schema.define(:version => 20150929024905) do
   end
 
   add_index "activity_types", ["activity_type"], :name => "index_activity_types_on_activity_type", :unique => true
+
+  create_table "activity_updates", :force => true do |t|
+    t.text     "narrative"
+    t.integer  "activity_id"
+    t.integer  "profile_id"
+    t.integer  "action_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "activity_updates", ["action_id"], :name => "index_activity_updates_on_action_id"
+  add_index "activity_updates", ["activity_id"], :name => "index_activity_updates_on_activity_id"
+  add_index "activity_updates", ["profile_id"], :name => "index_activity_updates_on_profile_id"
 
   create_table "contact_methods", :force => true do |t|
     t.string   "contact_method"

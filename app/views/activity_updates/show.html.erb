@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Narrative:</b>
+  <%= @activity_update.narrative %>
+</p>
+
+<p>
+  <b>Activity:</b>
+  <%= @activity_update.activity %>
+</p>
+
+<p>
+  <b>Profile:</b>
+  <%= @activity_update.profile %>
+</p>
+
+<p>
+  <b>Action:</b>
+  <%= @activity_update.action %>
+</p>
+
+
+<%= link_to 'Edit', edit_activity_update_path(@activity_update) %> |
+<%= link_to 'Back', activity_updates_path %>

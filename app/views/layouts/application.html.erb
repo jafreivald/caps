@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%= render "layouts/header" %>
-<% if current_profile || params[:controller] == "sessions" || params[:controller] == "profiles" %>
+<% if params[:controller] == "sessions" || params[:controller] == "profiles" || current_profile %>
   <%= yield %>
 <% end %>
 <%= render "layouts/footer" %>
