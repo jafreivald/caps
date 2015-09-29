@@ -82,5 +82,5 @@ test:
 #
 production:
   <<: *default
-  database: caps_production
-  password: <%= ENV['CAPS_DATABASE_PASSWORD'] %>
+  database: virtualj_caps
+  password:
