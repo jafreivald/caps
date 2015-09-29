@@ -12,12 +12,16 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :activity %><br />
+    <%= f.collection_select :activity_id, Activity.all, :id, :activity, {}, :class => "form-control" %>
+  </div>
+  <div class="form-group">
     <%= f.label :resource %><br />
-    <%= f.text_field :resource, :class => "form-control" %>
+    <%= f.collection_select :resource_id, Resource.all, :id, :resource, {}, :class => "form-control" %>
   </div>
   <div class="form-group">
     <%= f.label :fhir_base_url %><br />
-    <%= f.text_field :fhir_base_url, :class => "form-control" %>
+    <%= f.collection_select :fhir_base_url_id, FhirBaseUrl.all, :id, :fhir_base_url, {}, :class => "form-control" %>
   </div>
   <div class="actions">
     <%= f.submit :class => "submit_record btn btn-primary" %>

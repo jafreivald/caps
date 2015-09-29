@@ -1,5 +1,8 @@
 CAPS::Application.routes.draw do
   
+  resources :resource_types
+
+
   resources :activity_updates
 
 

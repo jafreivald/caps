@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150929030422) do
+ActiveRecord::Schema.define(:version => 20150929203135) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -124,23 +124,31 @@ ActiveRecord::Schema.define(:version => 20150929030422) do
     t.datetime "updated_at",      :null => false
   end
 
-  create_table "resource_utilizations", :force => true do |t|
-    t.integer  "resource_id"
-    t.integer  "fhir_base_url_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+  create_table "resource_types", :force => true do |t|
+    t.string   "resource_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
-  add_index "resource_utilizations", ["fhir_base_url_id"], :name => "index_resource_utilizations_on_fhir_base_url_id"
+  create_table "resource_utilizations", :force => true do |t|
+    t.integer  "resource_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "activity_id"
+  end
+
+  add_index "resource_utilizations", ["activity_id"], :name => "index_resource_utilizations_on_activity_id"
   add_index "resource_utilizations", ["resource_id"], :name => "index_resource_utilizations_on_resource_id"
 
   create_table "resources", :force => true do |t|
-    t.string   "resource"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "resource_type_id"
+    t.integer  "fhir_base_url_id"
+    t.integer  "fhir_resource_id"
   end
 
-  add_index "resources", ["resource"], :name => "index_resources_on_resource", :unique => true
+  add_index "resources", ["resource_type_id", "fhir_base_url_id", "fhir_resource_id"], :name => "resources_uniqueness_index", :unique => true
 
   create_table "role_definitions", :force => true do |t|
     t.integer  "role_id"

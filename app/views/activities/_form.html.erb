@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :activity_type %><br />
+    <%= f.collection_select :activity_type_id, ActivityType.all, :id, :activity_type, {}, :class => "form-control" %>
+  </div>
+  <div class="form-group">
     <%= f.label :base_time %><br />
     <%= f.text_field :base_time, :class => "form-control" %>
   </div>
@@ -21,15 +25,11 @@
   </div>
   <div class="form-group">
     <%= f.label :severity_level %><br />
-    <%= f.text_field :severity_level, :class => "form-control" %>
+    <%= f.collection_select :severity_level_id, SeverityLevel.all, :id, :severity_level, {}, :class => "form-control" %>
   </div>
   <div class="form-group">
     <%= f.label :role_definition %><br />
-    <%= f.text_field :role_definition, :class => "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :activity_type %><br />
-    <%= f.text_field :activity_type, :class => "form-control" %>
+    <%= f.collection_select :role_definition_id, RoleDefinition.all, :id, :role_definition, {}, :class => "form-control" %>
   </div>
   <div class="actions">
     <%= f.submit :class => "submit_record btn btn-primary" %>
