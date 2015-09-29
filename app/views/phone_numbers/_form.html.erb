@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :country_code %><br />
-    <%= f.text_field :country_code %>
+    <%= f.text_field :country_code, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :area_code %><br />
-    <%= f.text_field :area_code %>
+    <%= f.text_field :area_code, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :number %><br />
-    <%= f.text_field :number %>
+    <%= f.text_field :number, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :phone_provider %><br />
-    <%= f.text_field :phone_provider %>
+    <%= f.text_field :phone_provider, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :phone_type %><br />
-    <%= f.text_field :phone_type %>
+    <%= f.text_field :phone_type, :class => "form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => "submit_record btn btn-primary" %>
   </div>
 <% end %>

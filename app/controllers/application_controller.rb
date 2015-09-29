@@ -4,7 +4,10 @@ class ApplicationController < ActionController::Base
   
   private
   def current_profile
-    @current_profile ||= Profile.find_by_userid(session[:userid]) if session[:userid]
+    if session[:userid].nil?
+      return nil
+    end
+    @current_profile ||= Profile.find_by_userid(session[:userid].to_s) if session[:userid]
   end
   helper_method :current_profile
   

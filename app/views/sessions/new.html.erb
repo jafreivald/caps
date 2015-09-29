@@ -4,16 +4,16 @@
 # All Rights Reserved. Use pursuant to Joseph Freivald's instructions.
 %>
 <%= form_tag sessions_path do %>
-  <div class="field">
+  <div class="form-group">
       <%= label_tag :userid %><br />
-      <%= text_field_tag :userid, params[:userid] %>
+      <%= text_field_tag :userid, params[:userid], :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
       <%= label_tag :password %><br />
-      <%= password_field_tag :password %>
+      <%= password_field_tag :password, :class => "form-control" %>
   </div>
   <div class="actions">
-      <%= submit_tag "Log In" %>
+      <%= submit :class => "submit_record btn btn-primary"_tag "Log In" %>
   </div>
 <% end %>
 

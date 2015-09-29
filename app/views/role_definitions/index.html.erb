@@ -1,25 +1,26 @@
 <h1>Listing role_definitions</h1>
 
-<table>
-  <tr>
-    <th>Role</th>
-    <th>Profile</th>
-    <th>Resource utilization</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @role_definitions.each do |role_definition| %>
-  <tr>
-    <td><%= role_definition.role %></td>
-    <td><%= role_definition.profile %></td>
-    <td><%= role_definition.resource_utilization %></td>
-    <td><%= link_to 'Show', role_definition %></td>
-    <td><%= link_to 'Edit', edit_role_definition_path(role_definition) %></td>
-    <td><%= link_to 'Destroy', role_definition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="display">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th>Profile</th>
+            <th>Resource utilization</th>
+            <th>Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @role_definitions.each do |role_definition| %>
+          <tr>
+              <td><%= role_definition.role %></td>
+              <td><%= role_definition.profile %></td>
+              <td><%= role_definition.resource_utilization %></td>
+              <td><%= link_to 'Show', role_definition %>
+                  <%= link_to 'Edit', edit_role_definition_path(role_definition) %>
+                  <%= link_to 'Destroy', role_definition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+    </tbody>
 </table>
 
 <br />

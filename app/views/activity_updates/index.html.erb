@@ -1,27 +1,28 @@
 <h1>Listing activity_updates</h1>
 
-<table>
-  <tr>
-    <th>Narrative</th>
-    <th>Activity</th>
-    <th>Profile</th>
-    <th>Action</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @activity_updates.each do |activity_update| %>
-  <tr>
-    <td><%= activity_update.narrative %></td>
-    <td><%= activity_update.activity %></td>
-    <td><%= activity_update.profile %></td>
-    <td><%= activity_update.action %></td>
-    <td><%= link_to 'Show', activity_update %></td>
-    <td><%= link_to 'Edit', edit_activity_update_path(activity_update) %></td>
-    <td><%= link_to 'Destroy', activity_update, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="display">
+    <thead>
+        <tr>
+            <th>Narrative</th>
+            <th>Activity</th>
+            <th>Profile</th>
+            <th>Action</th>
+            <th>Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @activity_updates.each do |activity_update| %>
+          <tr>
+              <td><%= activity_update.narrative %></td>
+              <td><%= activity_update.activity %></td>
+              <td><%= activity_update.profile %></td>
+              <td><%= activity_update.action %></td>
+              <td><%= link_to 'Show', activity_update %>
+                  <%= link_to 'Edit', edit_activity_update_path(activity_update) %>
+                  <%= link_to 'Destroy', activity_update, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+    </tbody>
 </table>
 
 <br />

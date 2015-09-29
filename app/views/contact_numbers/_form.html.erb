@@ -11,23 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :preferred %><br />
-    <%= f.check_box :preferred %>
+    <%= f.check_box :preferred, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :contact_method %><br />
-    <%= f.text_field :contact_method %>
+    <%= f.text_field :contact_method, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number %>
+    <%= f.text_field :phone_number, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :profile %><br />
-    <%= f.text_field :profile %>
+    <%= f.text_field :profile, :class => "form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => "submit_record btn btn-primary" %>
   </div>
 <% end %>

@@ -11,15 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :resource %><br />
-    <%= f.text_field :resource %>
+    <%= f.text_field :resource, :class => "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :fhir_base_url %><br />
-    <%= f.text_field :fhir_base_url %>
+    <%= f.text_field :fhir_base_url, :class => "form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => "submit_record btn btn-primary" %>
   </div>
 <% end %>

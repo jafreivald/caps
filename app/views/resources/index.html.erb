@@ -1,21 +1,22 @@
 <h1>Listing resources</h1>
 
-<table>
-  <tr>
-    <th>Resource</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @resources.each do |resource| %>
-  <tr>
-    <td><%= resource.resource %></td>
-    <td><%= link_to 'Show', resource %></td>
-    <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
-    <td><%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="display">
+    <thead>
+        <tr>
+            <th>Resource</th>
+            <th>Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @resources.each do |resource| %>
+          <tr>
+              <td><%= resource.resource %></td>
+              <td><%= link_to 'Show', resource %>
+                  <%= link_to 'Edit', edit_resource_path(resource) %>
+                  <%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+    </tbody>
 </table>
 
 <br />

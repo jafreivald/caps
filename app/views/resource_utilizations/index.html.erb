@@ -1,23 +1,24 @@
 <h1>Listing resource_utilizations</h1>
 
-<table>
-  <tr>
-    <th>Resource</th>
-    <th>Fhir base url</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @resource_utilizations.each do |resource_utilization| %>
-  <tr>
-    <td><%= resource_utilization.resource %></td>
-    <td><%= resource_utilization.fhir_base_url %></td>
-    <td><%= link_to 'Show', resource_utilization %></td>
-    <td><%= link_to 'Edit', edit_resource_utilization_path(resource_utilization) %></td>
-    <td><%= link_to 'Destroy', resource_utilization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="display">
+    <thead>
+        <tr>
+            <th>Resource</th>
+            <th>FHIR base url</th>
+            <th>Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @resource_utilizations.each do |resource_utilization| %>
+          <tr>
+              <td><%= resource_utilization.resource %></td>
+              <td><%= resource_utilization.fhir_base_url %></td>
+              <td><%= link_to 'Show', resource_utilization %>
+                  <%= link_to 'Edit', edit_resource_utilization_path(resource_utilization) %>
+                  <%= link_to 'Destroy', resource_utilization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+    </tbody>
 </table>
 
 <br />

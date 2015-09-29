@@ -7,24 +7,35 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+# Bootstrap for sass
+gem 'sass-rails',   '~> 3.2.3'
+gem 'bootstrap-sass'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
+gem 'coffee-rails', '~> 3.2.1'
 
-  gem 'uglifier', '>= 1.0.3'
-end
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+gem 'therubyracer', :platforms => :ruby
+
+gem 'uglifier', '>= 1.0.3'
 
 # Nilify blanks
 gem 'nilify_blanks'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-minicolors-rails'
+
+# Table display, sort, pagination and search gem
+gem 'jquery-datatables-rails', '~> 3.3.0'
+
+#jquery UI interface
+gem 'jquery-ui-rails'
+
+
+
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+#gem 'turbolinks'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
@@ -44,6 +55,7 @@ gem 'jbuilder'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   #gem 'byebug'
+  gem 'debugger'
 
   # Better errors gem
   #gem 'better_errors'

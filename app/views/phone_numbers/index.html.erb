@@ -1,29 +1,30 @@
 <h1>Listing phone_numbers</h1>
 
-<table>
-  <tr>
-    <th>Country code</th>
-    <th>Area code</th>
-    <th>Number</th>
-    <th>Phone provider</th>
-    <th>Phone type</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @phone_numbers.each do |phone_number| %>
-  <tr>
-    <td><%= phone_number.country_code %></td>
-    <td><%= phone_number.area_code %></td>
-    <td><%= phone_number.number %></td>
-    <td><%= phone_number.phone_provider %></td>
-    <td><%= phone_number.phone_type %></td>
-    <td><%= link_to 'Show', phone_number %></td>
-    <td><%= link_to 'Edit', edit_phone_number_path(phone_number) %></td>
-    <td><%= link_to 'Destroy', phone_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="display">
+    <thead>
+        <tr>
+            <th>Country code</th>
+            <th>Area code</th>
+            <th>Number</th>
+            <th>Phone provider</th>
+            <th>Phone type</th>
+            <th>Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @phone_numbers.each do |phone_number| %>
+          <tr>
+              <td><%= phone_number.country_code %></td>
+              <td><%= phone_number.area_code %></td>
+              <td><%= phone_number.number %></td>
+              <td><%= phone_number.phone_provider %></td>
+              <td><%= phone_number.phone_type %></td>
+              <td><%= link_to 'Show', phone_number %>
+                  <%= link_to 'Edit', edit_phone_number_path(phone_number) %>
+                  <%= link_to 'Destroy', phone_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+    </tbody>
 </table>
 
 <br />

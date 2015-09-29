@@ -4,9 +4,9 @@ class SessionsController < ApplicationController
   end
   
   def create
-    user = Profile.find_by_userid(params[:userid])
-    if user && user.authenticate(params[:password])
-      session[:userid] = user.id
+    profile = Profile.find_by_userid(params[:userid])
+    if profile && profile.authenticate(params[:password])
+      session[:userid] = profile.userid
       redirect_to root_url, notice: "Log in successful"
     else
       flash.now.alert = "User ID or password is incorrect"
