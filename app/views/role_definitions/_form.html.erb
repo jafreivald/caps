@@ -12,16 +12,16 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :patient_profile %><br />
+    <%= f.collection_select :patient_profile_id, Profile.all, :id, :full_name, {}, :class => "form-control" %>
+  </div>
+  <div class="form-group">
     <%= f.label :role %><br />
     <%= f.collection_select :role_id, Role.all, :id, :role, {}, :class => "form-control" %>
   </div>
   <div class="form-group">
     <%= f.label :profile %><br />
     <%= f.collection_select :profile_id, Profile.all, :id, :full_name, {}, :class => "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :resource_utilization %><br />
-    <%= f.collection_select :profile_id, Profile.find_by(:resource_id => Resource.find_by(:resource => "Patient").id))), :id, :full_name, {}, :class => "form-control" %>
   </div>
   <div class="actions">
     <%= f.submit :class => "submit_record btn btn-primary" %>

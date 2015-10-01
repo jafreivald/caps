@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150929203135) do
+ActiveRecord::Schema.define(:version => 20150930205542) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -124,6 +124,16 @@ ActiveRecord::Schema.define(:version => 20150929203135) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "resource_authorizations", :force => true do |t|
+    t.integer  "role_definition_id"
+    t.integer  "resource_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "resource_authorizations", ["resource_id"], :name => "index_resource_authorizations_on_resource_id"
+  add_index "resource_authorizations", ["role_definition_id"], :name => "index_resource_authorizations_on_role_definition_id"
+
   create_table "resource_types", :force => true do |t|
     t.string   "resource_type"
     t.datetime "created_at",    :null => false
@@ -153,13 +163,13 @@ ActiveRecord::Schema.define(:version => 20150929203135) do
   create_table "role_definitions", :force => true do |t|
     t.integer  "role_id"
     t.integer  "profile_id"
-    t.integer  "resource_utilization_id"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.integer  "patient_profile_id", :default => 1, :null => false
   end
 
+  add_index "role_definitions", ["patient_profile_id"], :name => "index_role_definitions_on_patient_profile_id"
   add_index "role_definitions", ["profile_id"], :name => "index_role_definitions_on_profile_id"
-  add_index "role_definitions", ["resource_utilization_id"], :name => "index_role_definitions_on_resource_utilization_id"
   add_index "role_definitions", ["role_id"], :name => "index_role_definitions_on_role_id"
 
   create_table "roles", :force => true do |t|

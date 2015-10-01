@@ -31,7 +31,8 @@ gem 'jquery-datatables-rails', '~> 3.3.0'
 #jquery UI interface
 gem 'jquery-ui-rails'
 
-
+# HTTP Fetching
+gem 'rest-client'
 
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

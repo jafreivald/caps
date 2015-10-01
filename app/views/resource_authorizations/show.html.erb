@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Role definition:</b>
+  <%= @resource_authorization.role_definition %>
+</p>
+
+<p>
+  <b>Resource:</b>
+  <%= @resource_authorization.resource %>
+</p>
+
+
+<%= link_to 'Edit', edit_resource_authorization_path(@resource_authorization) %> |
+<%= link_to 'Back', resource_authorizations_path %>

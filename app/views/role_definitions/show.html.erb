@@ -1,20 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Patient Profile:</b>
+  <%= @role_definition.patient_profile.full_name %>
+</p>
+
+<p>
   <b>Role:</b>
-  <%= @role_definition.role %>
+  <%= @role_definition.role.role %>
 </p>
 
 <p>
-  <b>Profile:</b>
-  <%= @role_definition.profile %>
+  <b>Role Profile:</b>
+  <%= @role_definition.profile.full_name %>
 </p>
-
-<p>
-  <b>Resource utilization:</b>
-  <%= @role_definition.resource_utilization %>
-</p>
-
 
 <%= link_to 'Edit', edit_role_definition_path(@role_definition) %> |
 <%= link_to 'Back', role_definitions_path %>

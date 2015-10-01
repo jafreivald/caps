@@ -1,0 +1,25 @@
+<%= form_for(@resource_authorization) do |f| %>
+  <% if @resource_authorization.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@resource_authorization.errors.count, "error") %> prohibited this resource_authorization from being saved:</h2>
+
+      <ul>
+      <% @resource_authorization.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :role_definition %><br />
+    <%= f.collection_select :role_definition_id, RoleDefinition.all, :id, :role_information, {}, :class => "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :resource %><br />
+    <%= f.collection_select :resource_id, Resource.all, :id, :resource_identifier, {}, :class => "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

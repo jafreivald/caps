@@ -25,12 +25,13 @@
                       <%= content_tag :li, {:class => ("active" if params[:controller] == "activity_updates") } do; link_to "Activity Updates", activity_updates_path; end  %>
                       <%= content_tag :li, {:class => "dropdown"} do %>
                         <%= link_to "#", {:class => "dropdown-toggle", :'data-toggle' => "dropdown"} do %>
-                          <span class="caret"></span> Profile
+                          <span class="caret"></span> Profile Management
                         <% end %>
                         <%= content_tag :ul, {:class => "dropdown-menu"} do %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "contact_numbers") } do; link_to "Contact Numbers", contact_numbers_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "phone_numbers") } do; link_to "Phone Numbers", phone_numbers_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "profiles") } do; link_to "Profiles", profiles_path; end %>
+                          <%= content_tag :li, {:class => ("active" if params[:controller] == "resource_authorizations") } do; link_to "Resource Authorizations", resource_authorizations_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "resource_utilizations") } do; link_to "Resource Utilizations", resource_utilizations_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "role_definitions") } do; link_to "Role Definitions", role_definitions_path; end %>
                         <% end %>

@@ -1,5 +1,8 @@
 CAPS::Application.routes.draw do
   
+  resources :resource_authorizations
+
+
   resources :resource_types
 
 
