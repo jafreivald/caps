@@ -10,7 +10,7 @@ class Resource < ActiveRecord::Base
   has_many :resource_utilizations
   
   validates :resource_type_id, :fhir_base_url_id, :fhir_resource_id, :presence => true
-  validates_associated :resource_type, :fhir_base_urlS
+  validates_associated :resource_type, :fhir_base_url
   validates_uniqueness_of :fhir_resource_id, :scope => [ :fhir_base_url_id, :resource_type_id ]
   
   def resource_identifier
