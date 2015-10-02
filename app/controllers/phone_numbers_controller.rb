@@ -16,7 +16,7 @@ class PhoneNumbersController < ApplicationController
     @phone_number = PhoneNumber.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to :action => :edit }
       format.json { render json: @phone_number }
     end
   end

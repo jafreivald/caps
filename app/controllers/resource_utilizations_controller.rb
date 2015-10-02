@@ -16,7 +16,7 @@ class ResourceUtilizationsController < ApplicationController
     @resource_utilization = ResourceUtilization.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to :action => :edit }
       format.json { render json: @resource_utilization }
     end
   end

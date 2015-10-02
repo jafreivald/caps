@@ -16,7 +16,7 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to :action => :edit }
       format.json { render json: @role }
     end
   end

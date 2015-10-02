@@ -16,7 +16,7 @@ class SeverityLevelsController < ApplicationController
     @severity_level = SeverityLevel.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to :action => :edit }
       format.json { render json: @severity_level }
     end
   end

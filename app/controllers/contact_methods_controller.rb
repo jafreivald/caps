@@ -16,7 +16,7 @@ class ContactMethodsController < ApplicationController
     @contact_method = ContactMethod.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to :action => :edit }
       format.json { render json: @contact_method }
     end
   end
