@@ -82,7 +82,7 @@ class Resource < ActiveRecord::Base
   end
   
   def resource_identifier
-    self.rest_resource['link'].first['url']
+    self.fhir_base_url.fhir_base_url + self.resource_type.resource_type + "?_id=" + self.fhir_resource_id.to_s
   end
   
   def entries
