@@ -30,7 +30,7 @@
       <div class="panel-heading">REST Result for this resource</div>
       <div class="panel-body">
           <% @resource.rest_resource_info.each do |d| %>
-            <%= d.html_safe %>
+            <%= d.to_s.html_safe %>
           <% end %>
       </div>
   </div>
@@ -39,20 +39,14 @@
         <thead>
             <tr>
                 <th>Resource Type</th>
-                <th>Resource</th>
-                <th>Modify</th>
+                <th>Get</th>
             </tr>
         </thead>
         <tbody>
-            <% @related_rest_resources.each do |e| %>
+            <% @patient_related_resource_types.each do |e| %>
               <tr>
-                  <td><%= e.resource_type.resource_type %></td>
-                  <td>
-                      <% e.rest_resource_info.each do |d| %>
-                        <%= d.to_s.html_safe %>
-                      <% end %>
-                  </td>
-                  <td></td>
+                  <td><%= e.resource_type %></td>
+                  <td><%=  link_to "Import", import_resource_path(@resource, :resource_type_id => e), { :method => :post } %></td>
               </tr>
             <% end %>
         </tbody>

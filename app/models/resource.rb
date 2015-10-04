@@ -44,7 +44,8 @@ class Resource < ActiveRecord::Base
         when "MedicationDispense"
           ri.append("Medication: " + r["medication"]["reference"].to_s + " Qty: " + r["quantity"]["value"].to_s + r["quantity"]["units"].to_s + " for " + r["daysSupply"]["value"].to_s + " days, Received on: " + r["whenPrepared"].to_s)
         when "MedicationPrescription"
-          ri.append(r)
+          #debugger
+          ri.append("Medication: " + r["medication"]["reference"].to_s + " Dose: " + r["dosageInstruction"].first["doseQuantity"]["value"].to_s +  r["dosageInstruction"].first["doseQuantity"]["units"].to_s + " Qty: " +  r["dispense"]["quantity"]["value"].to_s )
         when "Observation"
           ri.append(r["code"]["coding"].first["display"].to_s + ": " + (r["valueString"] ? r["valueString"] : r["valueQuantity"]["value"].to_s + " " + r["valueQuantity"]["units"].to_s))
         end

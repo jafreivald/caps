@@ -36,10 +36,18 @@ class ResourcesController < ApplicationController
   def edit
     @resource = Resource.find(params[:id])
     if @resource.resource_type.resource_type == "Patient"
-      @related_rest_resources = update_patient_resources
+      prts = Array.new(["Condition", "Encounter", "MedicationDispense", "MedicationPrescription", "Observation"])
+      @patient_related_resource_types = ResourceType.where( :resource_type => prts)
     end
   end
 
+  def import
+    @resource = Resource.find(params[:id])
+    @resource_type = ResourceType.find(params[:resource_type_id])
+    import_patient_resources
+    redirect_to :action => :index
+  end
+  
   # POST /resources
   # POST /resources.json
   def create
@@ -90,30 +98,14 @@ class ResourcesController < ApplicationController
     end
   end
   
-  def update_patient_resources
+  def import_patient_resources
     rr = Array.new
     if @resource.resource_type.resource_type == "Patient"
       related_rest_resources = Array.new
-      ResourceType.all.each do |rt|
-        case rt.resource_type
-        when "Patient"
-          next
-        when "Medication"
-          next
-        when "Condition"
-        when "Encounter"
-        when "MedicationPrescription"
-        when "MedicationDispense"
-        when "Observarion"
-        end
-        related_rest_resources.append(JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { :patient => @resource.fhir_resource_id }, :accept => :json }))
-      end
+      related_rest_resources.append(JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + @resource_type.resource_type, { :params => { :patient => @resource.fhir_resource_id }, :accept => :json }))
       related_rest_resources.each do |r|
-        fb = FhirBaseUrl.where(:fhir_base_url => (r["base"][-1,1] == "/" ? r["base"] : r["base"] + "/")).first_or_create()
-        #debugger
         r["entry"].each do |e|
-          rt = ResourceType.where(:resource_type => e["resource"]["resourceType"]).first_or_create()
-          rr.append(Resource.where(:resource_type_id => rt.id, :fhir_base_url_id => fb.id, :fhir_resource_id => e["resource"]["id"].to_i).first_or_create())
+          rr.append(Resource.where(:resource_type_id => @resource_type.id, :fhir_base_url_id => @resource.fhir_base_url_id, :fhir_resource_id => e["resource"]["id"].to_i).first_or_create())
         end
       end
     end

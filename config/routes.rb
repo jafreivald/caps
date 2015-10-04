@@ -42,7 +42,11 @@ CAPS::Application.routes.draw do
   resources :phone_types
 
 
-  resources :resources
+  resources :resources do
+    member do
+      post 'import'
+    end
+  end
 
 
   resources :roles
