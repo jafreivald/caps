@@ -1,5 +1,8 @@
 CAPS::Application.routes.draw do
   
+  resources :fields
+
+
   resources :resource_authorizations
 
 
@@ -45,6 +48,7 @@ CAPS::Application.routes.draw do
   resources :resources do
     member do
       post 'import'
+      post 'search'
     end
   end
 

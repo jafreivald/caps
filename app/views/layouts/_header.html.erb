@@ -48,6 +48,7 @@
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "fhir_base_urls") } do; link_to "FHIR Base URLs", fhir_base_urls_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "phone_providers") } do; link_to "Phone Providers", phone_providers_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "phone_types") } do; link_to "Phone Types", phone_types_path; end %>
+                          <%= content_tag :li, {:class => ("active" if params[:controller] == "resource_types") } do; link_to "Resource Types", resource_types_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "roles") } do; link_to "Roles", roles_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "severity_levels") } do; link_to "Severity Levels", severity_levels_path; end %>
                           <%= content_tag :li, {:class => ("active" if params[:controller] == "update_actions") } do; link_to "Update Actions", update_actions_path; end %>

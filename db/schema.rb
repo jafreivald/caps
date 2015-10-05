@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150930205542) do
+ActiveRecord::Schema.define(:version => 20151004232523) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -84,6 +84,16 @@ ActiveRecord::Schema.define(:version => 20150930205542) do
   end
 
   add_index "fhir_base_urls", ["fhir_base_url"], :name => "index_fhir_base_urls_on_fhir_base_url", :unique => true
+
+  create_table "fields", :force => true do |t|
+    t.string   "field_type"
+    t.string   "field_text"
+    t.integer  "resource_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "fields", ["resource_id"], :name => "index_fields_on_resource_id"
 
   create_table "phone_numbers", :force => true do |t|
     t.string   "country_code"
