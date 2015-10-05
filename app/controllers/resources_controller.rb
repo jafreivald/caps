@@ -46,7 +46,7 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(params[:id])
     rt = ResourceType.find(params[:resource_type_id])
     bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { @resource.resource_type.resource_type.camelize(:lower) => @resource.fhir_resource_id }, :accept => :json })
-    @entries = bundle["entry"]
+    @entries = bundle["entry"].uniq
   end
   
   def import

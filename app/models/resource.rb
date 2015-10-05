@@ -85,8 +85,6 @@ class Resource < ActiveRecord::Base
     when "Observation"
       retval = resource["code"]["coding"].map { |c| c["display"] }.join(" ")
       retval += ": " + resource["valueQuantity"]["value"].to_s + resource["valueQuantity"]["units"] if resource["valueQuantity"]
-      
-        
     end
     retval
   end
@@ -126,7 +124,7 @@ class Resource < ActiveRecord::Base
   end
   
   def resource_info
-    r_id = "FHIR Resource Type: " + self.resource_type.resource_type
+    r_id = String.new
     Field.where(:resource_id => self.id).each do |f|
       #debugger
       case f.field_type

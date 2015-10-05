@@ -19,7 +19,8 @@
           <tr>
               <td><%= resource["resource"]["resourceType"].html_safe %></td>
               <td><%= @resource.resource_entry_label(resource).html_safe %></td>
-              <td><%= link_to "Import", import_resource_path(@resource, :fhir_reference => resource["resource"]["resourceType"] + "/" + resource["resource"]["id"]), { :method => :post, :class => "btn btn-info" } %></td>
+              <td><% Resource.where(:resource_type_id => ResourceType.find_by_resource_type(resource["resource"]["resourceType"]).id, :fhir_resource_id => resource["resource"]["id"]).any? ? lt = "Re-import" : lt = "Import" %>
+                  <%=  link_to lt, import_resource_path(@resource, :fhir_reference => resource["resource"]["resourceType"] + "/" + resource["resource"]["id"]), { :method => :post, :class => "btn btn-info" } %></td>
           </tr>
         <% end %>
     </tbody>
