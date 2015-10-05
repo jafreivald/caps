@@ -26,28 +26,30 @@
   <div class="actions">
       <%= f.submit :class => "submit_record btn btn-primary" %>
   </div>
-      
+
   <div class="panel panel-default">
       <div class="panel-heading">Resource Information <%= link_to "Import", import_resource_path(@resource, :fhir_reference => @resource.resource_type.resource_type + "/" + @resource.fhir_resource_id.to_s ), { :method => :post, :class => "btn btn-info" } %></div>
       <div class="panel-body">
           <%= @resource.resource_info.nil? ? "" : @resource.resource_info.html_safe %>
       </div>
   </div>
-  <div class="panel-heading">Search for Related Resources</div>
-  <table class="display">
-      <thead>
-          <tr>
-              <th>Resource Type</th>
-              <th>Search</th>
-          </tr>
-      </thead>
-      <tbody>
-          <% @resource_types.each do |rt| %>
+  <% if @resource.resource_type.resource_type == "Patient" %>
+    <div class="panel-heading">Search for Patient Related Resources</div>
+    <table class="display">
+        <thead>
             <tr>
-                <td><%= rt.resource_type %></td>
-                <td><%= link_to "Search", search_resource_path(@resource, :resource_type_id => rt.id), { :method => :post } %></td>
+                <th>Resource Type</th>
+                <th>Search</th>
             </tr>
-          <% end %>
-      </tbody>
-  </table>
+        </thead>
+        <tbody>
+            <% @resource_types.each do |rt| %>
+              <tr>
+                  <td><%= rt.resource_type %></td>
+                  <td><%= link_to "Search", search_resource_path(@resource, :resource_type_id => rt.id), { :method => :post } %></td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+  <% end %>
 <% end %>

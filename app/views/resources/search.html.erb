@@ -1,0 +1,30 @@
+<%#
+# File Created by Joseph Freivald
+# Copyright (c) 2015
+# All Rights Reserved. Use pursuant to Joseph Freivald's instructions.
+%>
+
+<h1>Listing related resources</h1>
+
+<table class="display">
+    <thead>
+        <tr>
+            <th>Resource</th>
+            <th>Description</th>
+            <th>Import</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @entries.each do |resource| %>
+          <tr>
+              <td><%= resource["resource"]["resourceType"].html_safe %></td>
+              <td><%= @resource.resource_entry_label(resource).html_safe %></td>
+              <td><%= link_to "Import", import_resource_path(@resource, :fhir_reference => resource["resource"]["resourceType"] + "/" + resource["resource"]["id"]), { :method => :post, :class => "btn btn-info" } %></td>
+          </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Resource', new_resource_path %>

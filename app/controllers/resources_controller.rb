@@ -35,10 +35,20 @@ class ResourcesController < ApplicationController
   # GET /resources/1/edit
   def edit
     @resource = Resource.find(params[:id])
-    @resource_types = ResourceType.all
+    if @resource.resource_type.resource_type == "Patient"
+      rts = "Encounter", "Condition", "Observation", "MedicationPrescription", "MedicationDispense"
+      @resource_types = ResourceType.where(:resource_type => rts)
+    end
     @fields = Field.where(:resource_id => @resource.id)
   end
 
+  def search
+    @resource = Resource.find(params[:id])
+    rt = ResourceType.find(params[:resource_type_id])
+    bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { @resource.resource_type.resource_type.camelize(:lower) => @resource.fhir_resource_id }, :accept => :json })
+    @entries = bundle["entry"]
+  end
+  
   def import
     @resource = Resource.find(params[:id])
     rt = ResourceType.find_by_resource_type(params[:fhir_reference].split("/")[0])
@@ -49,7 +59,68 @@ class ResourcesController < ApplicationController
     end
 
     bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { :_id => fhir_id }, :accept => :json })
-    
+
+    nr = import_bundle(bundle, rt, fhir_id)
+    if nr.nil?
+      redirect_to @resource, notice: 'Unable to import new resource ' + params[:fhir_reference] + '. Resource import failed'
+    else
+      redirect_to nr, notice: 'Resource successfully imported'
+    end
+  end
+  
+  # POST /resources
+  # POST /resources.json
+  def create
+    @resource = Resource.new(params[:resource])
+
+    respond_to do |format|
+      if @resource.save
+        if @resource.resource_type.resource_type == "Patient"
+          update_patient_resources
+        end
+        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
+        format.json { render json: @resource, status: :created, location: @resource }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /resources/1
+  # PUT /resources/1.json
+  def update
+    @resource = Resource.find(params[:id])
+
+    respond_to do |format|
+      if @resource.update_attributes(params[:resource])
+        if @resource.resource_type.resource_type == "Patient"
+          update_patient_resources
+        end
+        format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /resources/1
+  # DELETE /resources/1.json
+  def destroy
+    @resource = Resource.find(params[:id])
+    @resource.destroy
+
+    respond_to do |format|
+      format.html { redirect_to resources_url }
+      format.json { head :no_content }
+    end
+  end
+  
+  private
+  
+  def import_bundle(bundle, rt, fhir_id)
     ActiveRecord::Base.transaction do
       bundle["entry"].each do |e|
         @imported_resource = Resource.where(:fhir_base_url_id => @resource.fhir_base_url_id, :resource_type_id => rt.id, :fhir_resource_id => fhir_id).first_or_create()
@@ -103,60 +174,13 @@ class ResourcesController < ApplicationController
           Field.where(:resource_id => @imported_resource.id, :field_type => "status", :field_text => e["resource"]["status"].to_s).first_or_create()
           Field.where(:resource_id => @imported_resource.id, :field_type => "reliability", :field_text => e["resource"]["reliability"].to_s).first_or_create()
         end
+        
       end
     end
-    redirect_to @resource
+    @imported_resource
   rescue ActiveRecord::Rollback
     self.errors.add("Import aborted due to errors on one or more sheets") 
+    nil
   end
   
-  # POST /resources
-  # POST /resources.json
-  def create
-    @resource = Resource.new(params[:resource])
-
-    respond_to do |format|
-      if @resource.save
-        if @resource.resource_type.resource_type == "Patient"
-          update_patient_resources
-        end
-        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
-        format.json { render json: @resource, status: :created, location: @resource }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /resources/1
-  # PUT /resources/1.json
-  def update
-    @resource = Resource.find(params[:id])
-
-    respond_to do |format|
-      if @resource.update_attributes(params[:resource])
-        if @resource.resource_type.resource_type == "Patient"
-          update_patient_resources
-        end
-        format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /resources/1
-  # DELETE /resources/1.json
-  def destroy
-    @resource = Resource.find(params[:id])
-    @resource.destroy
-
-    respond_to do |format|
-      format.html { redirect_to resources_url }
-      format.json { head :no_content }
-    end
-  end
 end
