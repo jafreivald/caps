@@ -101,21 +101,29 @@ class Resource < ActiveRecord::Base
       retval = Field.where(:resource_id => self.id, :field_type => "serviceProvider").map { |f| f.field_text + " " }.join(",") + Field.where(:resource_id => self.id, :field_type => "start").map { |f| f.field_text + " " }.join(",")
     when "MedicationDispense" 
       f = Field.where(:resource_id => self.id, :field_type => "medication").first
-      rt = ResourceType.find_by_resource_type(f.field_text.split("/")[0])
-      ref = Resource.where(:resource_type_id => rt.id, :fhir_bae_url_id => self.fhir_base_url_id, :fhir_resource_id => f.field_text.split("/")[1])
-      if ref.nil?
-        retval = ActionController::Base.helpers.link_to "Import Medication", Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => f.field_text), { :method => :post, :class => "btn btn-info" }
+      if f != nil
+        rt = ResourceType.find_by_resource_type(f.field_text.split("/")[0])
+        ref = Resource.where(:resource_type_id => rt.id, :fhir_base_url_id => self.fhir_base_url_id, :fhir_resource_id => f.field_text.split("/")[1]).first
+        if ref.nil?
+          retval = ActionController::Base.helpers.link_to "Import Medication", Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => f.field_text), { :method => :post, :class => "btn btn-info" }
+        else
+          retval = ref.resource_label
+        end
+        retval += " Prepared: " + Field.where(:resource_id => self.id, :field_text => "whenPrepared").map { |f| f.field_text + " " }.join(",")
       else
-        retval = ref.resource_label
+        retval = ActionController::Base.helpers.link_to "Import Medication Dispense", Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => self.resource_type.resource_type + "/" + self.fhir_resource_id.to_s), { :method => :post, :class => "btn btn-info" }
       end
-      retval += " Prepared: " + Field.where(:resource_id => self.id, :field_text => "whenPrepared").map { |f| f.field_text + " " }.join(",")
     when "MedicationPrescription"
-      f = Field.find_by_resource_id_and_field_type(:resource_id => self.id, :field_type => "medication")
-      ref = Resource.where(:resource_type_id => ResourceType.find_by_resource_type(f.field_text.split("/")[0]).id, :fhir_bae_url_id => self.fhir_base_url_id, :fhir_resource_id => f.field_text.split("/")[1])
-      if ref.nil?
-        retval = ActionController::Base.helpers.link_to "Import Prescription", Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => f.field_text), { :method => :post, :class => "btn btn-info" }
+      f = Field.find_by_resource_id_and_field_type(self.id, "medication")
+      if f != nil
+        ref = Resource.where(:resource_type_id => ResourceType.find_by_resource_type(f.field_text.split("/")[0]).id, :fhir_base_url_id => self.fhir_base_url_id, :fhir_resource_id => f.field_text.split("/")[1]).first
+        if ref.nil?
+          retval = ActionController::Base.helpers.link_to "Import Medication", Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => f.field_text), { :method => :post, :class => "btn btn-info" }
+        else
+          retval = ref.resource_label
+        end
       else
-        retval = ref.resource_label
+        retval = ActionController::Base.helpers.link_to "Import Prescription", Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => self.resource_type.resource_type + "/" + self.fhir_resource_id.to_s), { :method => :post, :class => "btn btn-info" }
       end
     when "Observation"
       retval = Field.where(:resource_id => self.id, :field_type => "value")..map { |f| f.field_text + " " }.join(",")
