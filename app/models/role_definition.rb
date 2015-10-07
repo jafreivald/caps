@@ -9,9 +9,7 @@ class RoleDefinition < ActiveRecord::Base
   has_many :resource_authorizations
   has_many :resources, :through => :resource_authorizations
   
-  
-  
   def role_information
-    "Patient: " + self.patient_profile.full_name + ", Role: " + self.role.role + ", Role Profile: " + profile.full_name
+    "Patient: " + self.patient_profile.full_name + ", Role: " + self.role.role + ", Role Profile: " + self.profile.full_name
   end
 end
