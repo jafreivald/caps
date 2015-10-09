@@ -40,6 +40,7 @@ gem 'rest-client'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'oauth2'
 gem 'doorkeeper'
 
 # To use Jbuilder templates for JSON

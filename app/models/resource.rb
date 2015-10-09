@@ -6,8 +6,9 @@ class Resource < ActiveRecord::Base
   belongs_to :resource_type
   belongs_to :fhir_base_url
   
-  has_many :role_definitions
-  has_many :resource_utilizations
+  has_many :resource_authorizations
+  has_many :role_definitions, :through => :resource_authorizations
+  has_many :profiles, :through => :role_definitions
   
   validates :resource_type_id, :fhir_base_url_id, :fhir_resource_id, :presence => true
   validates_associated :resource_type, :fhir_base_url
@@ -92,7 +93,11 @@ class Resource < ActiveRecord::Base
   def resource_label
     case self.resource_type.resource_type
     when "Patient"
-      retval = "Given Names: " + Field.where(:resource_id => self.id, :field_type => "givenName").map { |f| f.field_text + " " }.join(",") + "Family Names: " + Field.where(:resource_id => self.id, :field_type => "familyName").map { |f| f.field_text + " " }.join(",")
+      if my_fields = Field.joins(:resource).where('resources.id' => self.id).any?
+        retval = "Given Names: " + my_fields.where(:resource_id => self.id, :field_type => "givenName").map { |f| f.field_text + " " }.join(",") + "Family Names: " + my_fields.where(:resource_id => self.id, :field_type => "familyName").map { |f| f.field_text + " " }.join(",")
+      else
+        retval = ActionController::Base.helpers.link_to "Import Patient " + self.fhir_resource_id.to_s, Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => self.fhir_base_url.fhir_base_url + self.resource_type.resource_type + "?_id=" + self.fhir_resource_id.to_s), { :method => :post, :class => "btn btn-info" }
+      end
     when "Medication" 
       retval = Field.where(:resource_id => self.id, :field_type => "name").map { |f| f.field_text + " " }.join(",")
     when "Condition"

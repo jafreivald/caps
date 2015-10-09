@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151007003248) do
+ActiveRecord::Schema.define(:version => 20151009042230) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -213,12 +213,12 @@ ActiveRecord::Schema.define(:version => 20151007003248) do
   create_table "role_definitions", :force => true do |t|
     t.integer  "role_id"
     t.integer  "profile_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.integer  "patient_profile_id", :default => 1, :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "patient_resource_id", :default => 1, :null => false
   end
 
-  add_index "role_definitions", ["patient_profile_id"], :name => "index_role_definitions_on_patient_profile_id"
+  add_index "role_definitions", ["patient_resource_id"], :name => "index_role_definitions_on_patient_profile_id"
   add_index "role_definitions", ["profile_id"], :name => "index_role_definitions_on_profile_id"
   add_index "role_definitions", ["role_id"], :name => "index_role_definitions_on_role_id"
 

@@ -4,7 +4,6 @@ class RoleDefinition < ActiveRecord::Base
   belongs_to :patient_profile, class_name: "Profile"
   belongs_to :role
   belongs_to :profile
-  belongs_to :resource_utilization
   
   has_many :resource_authorizations
   has_many :resources, :through => :resource_authorizations
