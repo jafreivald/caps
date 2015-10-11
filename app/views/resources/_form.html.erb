@@ -28,7 +28,7 @@
   </div>
 
   <div class="panel panel-default">
-      <div class="panel-heading">Resource Information <%= link_to "Import", import_resource_path(@resource, :fhir_reference => @resource.resource_type.resource_type + "/" + @resource.fhir_resource_id.to_s ), { :method => :post, :class => "btn btn-info" } %></div>
+      <div class="panel-heading">Resource Information <%= link_to ("Import", import_resource_path(@resource, :fhir_reference => @resource.resource_type.resource_type + "/" + @resource.fhir_resource_id.to_s ), { :method => :post, :class => "btn btn-info" }) if @resource.persisted? %></div>
       <div class="panel-body">
           <%= @resource.resource_info.nil? ? "" : @resource.resource_info.html_safe %>
       </div>
