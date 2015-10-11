@@ -1,0 +1,153 @@
+                     fields GET    /fields(.:format)                           fields#index
+                            POST   /fields(.:format)                           fields#create
+                  new_field GET    /fields/new(.:format)                       fields#new
+                 edit_field GET    /fields/:id/edit(.:format)                  fields#edit
+                      field GET    /fields/:id(.:format)                       fields#show
+                            PUT    /fields/:id(.:format)                       fields#update
+                            DELETE /fields/:id(.:format)                       fields#destroy
+    resource_authorizations GET    /resource_authorizations(.:format)          resource_authorizations#index
+                            POST   /resource_authorizations(.:format)          resource_authorizations#create
+ new_resource_authorization GET    /resource_authorizations/new(.:format)      resource_authorizations#new
+edit_resource_authorization GET    /resource_authorizations/:id/edit(.:format) resource_authorizations#edit
+     resource_authorization GET    /resource_authorizations/:id(.:format)      resource_authorizations#show
+                            PUT    /resource_authorizations/:id(.:format)      resource_authorizations#update
+                            DELETE /resource_authorizations/:id(.:format)      resource_authorizations#destroy
+             resource_types GET    /resource_types(.:format)                   resource_types#index
+                            POST   /resource_types(.:format)                   resource_types#create
+          new_resource_type GET    /resource_types/new(.:format)               resource_types#new
+         edit_resource_type GET    /resource_types/:id/edit(.:format)          resource_types#edit
+              resource_type GET    /resource_types/:id(.:format)               resource_types#show
+                            PUT    /resource_types/:id(.:format)               resource_types#update
+                            DELETE /resource_types/:id(.:format)               resource_types#destroy
+           activity_updates GET    /activity_updates(.:format)                 activity_updates#index
+                            POST   /activity_updates(.:format)                 activity_updates#create
+        new_activity_update GET    /activity_updates/new(.:format)             activity_updates#new
+       edit_activity_update GET    /activity_updates/:id/edit(.:format)        activity_updates#edit
+            activity_update GET    /activity_updates/:id(.:format)             activity_updates#show
+                            PUT    /activity_updates/:id(.:format)             activity_updates#update
+                            DELETE /activity_updates/:id(.:format)             activity_updates#destroy
+                    actions GET    /actions(.:format)                          actions#index
+                            POST   /actions(.:format)                          actions#create
+                 new_action GET    /actions/new(.:format)                      actions#new
+                edit_action GET    /actions/:id/edit(.:format)                 actions#edit
+                     action GET    /actions/:id(.:format)                      actions#show
+                            PUT    /actions/:id(.:format)                      actions#update
+                            DELETE /actions/:id(.:format)                      actions#destroy
+                 activities GET    /activities(.:format)                       activities#index
+                            POST   /activities(.:format)                       activities#create
+               new_activity GET    /activities/new(.:format)                   activities#new
+              edit_activity GET    /activities/:id/edit(.:format)              activities#edit
+                   activity GET    /activities/:id(.:format)                   activities#show
+                            PUT    /activities/:id(.:format)                   activities#update
+                            DELETE /activities/:id(.:format)                   activities#destroy
+            contact_numbers GET    /contact_numbers(.:format)                  contact_numbers#index
+                            POST   /contact_numbers(.:format)                  contact_numbers#create
+         new_contact_number GET    /contact_numbers/new(.:format)              contact_numbers#new
+        edit_contact_number GET    /contact_numbers/:id/edit(.:format)         contact_numbers#edit
+             contact_number GET    /contact_numbers/:id(.:format)              contact_numbers#show
+                            PUT    /contact_numbers/:id(.:format)              contact_numbers#update
+                            DELETE /contact_numbers/:id(.:format)              contact_numbers#destroy
+              phone_numbers GET    /phone_numbers(.:format)                    phone_numbers#index
+                            POST   /phone_numbers(.:format)                    phone_numbers#create
+           new_phone_number GET    /phone_numbers/new(.:format)                phone_numbers#new
+          edit_phone_number GET    /phone_numbers/:id/edit(.:format)           phone_numbers#edit
+               phone_number GET    /phone_numbers/:id(.:format)                phone_numbers#show
+                            PUT    /phone_numbers/:id(.:format)                phone_numbers#update
+                            DELETE /phone_numbers/:id(.:format)                phone_numbers#destroy
+           role_definitions GET    /role_definitions(.:format)                 role_definitions#index
+                            POST   /role_definitions(.:format)                 role_definitions#create
+        new_role_definition GET    /role_definitions/new(.:format)             role_definitions#new
+       edit_role_definition GET    /role_definitions/:id/edit(.:format)        role_definitions#edit
+            role_definition GET    /role_definitions/:id(.:format)             role_definitions#show
+                            PUT    /role_definitions/:id(.:format)             role_definitions#update
+                            DELETE /role_definitions/:id(.:format)             role_definitions#destroy
+      resource_utilizations GET    /resource_utilizations(.:format)            resource_utilizations#index
+                            POST   /resource_utilizations(.:format)            resource_utilizations#create
+   new_resource_utilization GET    /resource_utilizations/new(.:format)        resource_utilizations#new
+  edit_resource_utilization GET    /resource_utilizations/:id/edit(.:format)   resource_utilizations#edit
+       resource_utilization GET    /resource_utilizations/:id(.:format)        resource_utilizations#show
+                            PUT    /resource_utilizations/:id(.:format)        resource_utilizations#update
+                            DELETE /resource_utilizations/:id(.:format)        resource_utilizations#destroy
+             activity_types GET    /activity_types(.:format)                   activity_types#index
+                            POST   /activity_types(.:format)                   activity_types#create
+          new_activity_type GET    /activity_types/new(.:format)               activity_types#new
+         edit_activity_type GET    /activity_types/:id/edit(.:format)          activity_types#edit
+              activity_type GET    /activity_types/:id(.:format)               activity_types#show
+                            PUT    /activity_types/:id(.:format)               activity_types#update
+                            DELETE /activity_types/:id(.:format)               activity_types#destroy
+            contact_methods GET    /contact_methods(.:format)                  contact_methods#index
+                            POST   /contact_methods(.:format)                  contact_methods#create
+         new_contact_method GET    /contact_methods/new(.:format)              contact_methods#new
+        edit_contact_method GET    /contact_methods/:id/edit(.:format)         contact_methods#edit
+             contact_method GET    /contact_methods/:id(.:format)              contact_methods#show
+                            PUT    /contact_methods/:id(.:format)              contact_methods#update
+                            DELETE /contact_methods/:id(.:format)              contact_methods#destroy
+             fhir_base_urls GET    /fhir_base_urls(.:format)                   fhir_base_urls#index
+                            POST   /fhir_base_urls(.:format)                   fhir_base_urls#create
+          new_fhir_base_url GET    /fhir_base_urls/new(.:format)               fhir_base_urls#new
+         edit_fhir_base_url GET    /fhir_base_urls/:id/edit(.:format)          fhir_base_urls#edit
+              fhir_base_url GET    /fhir_base_urls/:id(.:format)               fhir_base_urls#show
+                            PUT    /fhir_base_urls/:id(.:format)               fhir_base_urls#update
+                            DELETE /fhir_base_urls/:id(.:format)               fhir_base_urls#destroy
+            phone_providers GET    /phone_providers(.:format)                  phone_providers#index
+                            POST   /phone_providers(.:format)                  phone_providers#create
+         new_phone_provider GET    /phone_providers/new(.:format)              phone_providers#new
+        edit_phone_provider GET    /phone_providers/:id/edit(.:format)         phone_providers#edit
+             phone_provider GET    /phone_providers/:id(.:format)              phone_providers#show
+                            PUT    /phone_providers/:id(.:format)              phone_providers#update
+                            DELETE /phone_providers/:id(.:format)              phone_providers#destroy
+                phone_types GET    /phone_types(.:format)                      phone_types#index
+                            POST   /phone_types(.:format)                      phone_types#create
+             new_phone_type GET    /phone_types/new(.:format)                  phone_types#new
+            edit_phone_type GET    /phone_types/:id/edit(.:format)             phone_types#edit
+                 phone_type GET    /phone_types/:id(.:format)                  phone_types#show
+                            PUT    /phone_types/:id(.:format)                  phone_types#update
+                            DELETE /phone_types/:id(.:format)                  phone_types#destroy
+            import_resource POST   /resources/:id/import(.:format)             resources#import
+            search_resource POST   /resources/:id/search(.:format)             resources#search
+                  resources GET    /resources(.:format)                        resources#index
+                            POST   /resources(.:format)                        resources#create
+               new_resource GET    /resources/new(.:format)                    resources#new
+              edit_resource GET    /resources/:id/edit(.:format)               resources#edit
+                   resource GET    /resources/:id(.:format)                    resources#show
+                            PUT    /resources/:id(.:format)                    resources#update
+                            DELETE /resources/:id(.:format)                    resources#destroy
+                      roles GET    /roles(.:format)                            roles#index
+                            POST   /roles(.:format)                            roles#create
+                   new_role GET    /roles/new(.:format)                        roles#new
+                  edit_role GET    /roles/:id/edit(.:format)                   roles#edit
+                       role GET    /roles/:id(.:format)                        roles#show
+                            PUT    /roles/:id(.:format)                        roles#update
+                            DELETE /roles/:id(.:format)                        roles#destroy
+            severity_levels GET    /severity_levels(.:format)                  severity_levels#index
+                            POST   /severity_levels(.:format)                  severity_levels#create
+         new_severity_level GET    /severity_levels/new(.:format)              severity_levels#new
+        edit_severity_level GET    /severity_levels/:id/edit(.:format)         severity_levels#edit
+             severity_level GET    /severity_levels/:id(.:format)              severity_levels#show
+                            PUT    /severity_levels/:id(.:format)              severity_levels#update
+                            DELETE /severity_levels/:id(.:format)              severity_levels#destroy
+             update_actions GET    /update_actions(.:format)                   update_actions#index
+                            POST   /update_actions(.:format)                   update_actions#create
+          new_update_action GET    /update_actions/new(.:format)               update_actions#new
+         edit_update_action GET    /update_actions/:id/edit(.:format)          update_actions#edit
+              update_action GET    /update_actions/:id(.:format)               update_actions#show
+                            PUT    /update_actions/:id(.:format)               update_actions#update
+                            DELETE /update_actions/:id(.:format)               update_actions#destroy
+                     signup GET    /signup(.:format)                           profiles#new
+                      login GET    /login(.:format)                            sessions#new
+                     logout GET    /logout(.:format)                           sessions#destroy
+                   profiles GET    /profiles(.:format)                         profiles#index
+                            POST   /profiles(.:format)                         profiles#create
+                new_profile GET    /profiles/new(.:format)                     profiles#new
+               edit_profile GET    /profiles/:id/edit(.:format)                profiles#edit
+                    profile GET    /profiles/:id(.:format)                     profiles#show
+                            PUT    /profiles/:id(.:format)                     profiles#update
+                            DELETE /profiles/:id(.:format)                     profiles#destroy
+                   sessions GET    /sessions(.:format)                         sessions#index
+                            POST   /sessions(.:format)                         sessions#create
+                new_session GET    /sessions/new(.:format)                     sessions#new
+               edit_session GET    /sessions/:id/edit(.:format)                sessions#edit
+                    session GET    /sessions/:id(.:format)                     sessions#show
+                            PUT    /sessions/:id(.:format)                     sessions#update
+                            DELETE /sessions/:id(.:format)                     sessions#destroy
+                       root        /                                           welcome#index

@@ -1,5 +1,7 @@
 CAPS::Application.routes.draw do
   
+  use_doorkeeper
+
   resources :fields
 
 

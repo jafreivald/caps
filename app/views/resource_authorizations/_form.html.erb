@@ -17,7 +17,7 @@
   </div>
   <div class="form-group">
     <%= f.label :resource %><br />
-    <%= f.select :resource_id, Resource.all.map { |r| [r.resource_type.resource_type + ": " + r.resource_select_label.html_safe, r.id]}, {}, :class => "form-control" %>
+    <%= f.collection_select :resource_id, Resource.all, :id, :resource_label, {}, :class => "form-control" %>
   </div>
   <div class="actions">
     <%= f.submit %>

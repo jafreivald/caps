@@ -32,27 +32,6 @@ fhir_list.each do |url|
 	FhirBaseUrl.where(:fhir_base_url => url).first_or_create()
 end
 
-puts "Resources (Patients only)"
-
-p = ResourceType.where(:resource_type => "Patient").first
-
-resource_list = [
-  [p.id, 1, 1],
-  [p.id, 1, 2],
-  [p.id, 1, 3],
-  [p.id, 1, 4],
-  [p.id, 1, 5],
-  [p.id, 1, 6],
-  [p.id, 1, 7],
-  [p.id, 1, 8],
-  [p.id, 1, 9],
-  [p.id, 1, 10]
-]
-
-resource_list.each do |rt, fb, fi|
-	Resource.where(:resource_type_id => rt, :fhir_base_url_id => fb, :fhir_resource_id => fi).first_or_create()
-end
-
 puts "Severity Levels"
 
 sl_list = [

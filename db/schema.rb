@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151004232523) do
+ActiveRecord::Schema.define(:version => 20151009042230) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -95,6 +95,46 @@ ActiveRecord::Schema.define(:version => 20151004232523) do
 
   add_index "fields", ["resource_id"], :name => "index_fields_on_resource_id"
 
+  create_table "oauth_access_grants", :force => true do |t|
+    t.integer  "resource_owner_id", :null => false
+    t.integer  "application_id",    :null => false
+    t.string   "token",             :null => false
+    t.integer  "expires_in",        :null => false
+    t.text     "redirect_uri",      :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_grants", ["token"], :name => "index_oauth_access_grants_on_token", :unique => true
+
+  create_table "oauth_access_tokens", :force => true do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
+    t.string   "token",             :null => false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",        :null => false
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_tokens", ["refresh_token"], :name => "index_oauth_access_tokens_on_refresh_token", :unique => true
+  add_index "oauth_access_tokens", ["resource_owner_id"], :name => "index_oauth_access_tokens_on_resource_owner_id"
+  add_index "oauth_access_tokens", ["token"], :name => "index_oauth_access_tokens_on_token", :unique => true
+
+  create_table "oauth_applications", :force => true do |t|
+    t.string   "name",                         :null => false
+    t.string   "uid",                          :null => false
+    t.string   "secret",                       :null => false
+    t.text     "redirect_uri",                 :null => false
+    t.string   "scopes",       :default => "", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
+
   create_table "phone_numbers", :force => true do |t|
     t.string   "country_code"
     t.string   "area_code"
@@ -173,12 +213,12 @@ ActiveRecord::Schema.define(:version => 20151004232523) do
   create_table "role_definitions", :force => true do |t|
     t.integer  "role_id"
     t.integer  "profile_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.integer  "patient_profile_id", :default => 1, :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "patient_resource_id", :default => 1, :null => false
   end
 
-  add_index "role_definitions", ["patient_profile_id"], :name => "index_role_definitions_on_patient_profile_id"
+  add_index "role_definitions", ["patient_resource_id"], :name => "index_role_definitions_on_patient_profile_id"
   add_index "role_definitions", ["profile_id"], :name => "index_role_definitions_on_profile_id"
   add_index "role_definitions", ["role_id"], :name => "index_role_definitions_on_role_id"
 
