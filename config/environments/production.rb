@@ -61,9 +61,6 @@ CAPS::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Allow console on VM host subnet
-  config.web_console.whitelisted_ips = '192.168.122.0/24'
-
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
