@@ -28,12 +28,12 @@
   </div>
 
   <div class="panel panel-default">
-      <div class="panel-heading">Resource Information <%= link_to ("Import", import_resource_path(@resource, :fhir_reference => @resource.resource_type.resource_type + "/" + @resource.fhir_resource_id.to_s ), { :method => :post, :class => "btn btn-info" }) if @resource.persisted? %></div>
+      <div class="panel-heading">Resource Information <% if @resource.persisted? %><%= link_to "Import", import_resource_path(@resource, :fhir_reference => @resource.resource_type.resource_type + "/" + @resource.fhir_resource_id.to_s ), { :method => :post, :class => "btn btn-info" } %><% end %> </div>
       <div class="panel-body">
           <%= @resource.resource_info.nil? ? "" : @resource.resource_info.html_safe %>
       </div>
   </div>
-  <% if @resource.resource_type.resource_type == "Patient" %>
+  <% if @resource.persisted? && @resource.resource_type.resource_type == "Patient" %>
     <div class="panel-heading">Search for Patient Related Resources</div>
     <table class="display">
         <thead>
