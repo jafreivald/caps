@@ -3,7 +3,6 @@
 <table class="display">
     <thead>
         <tr>
-            <th>Patient Profile</th>
             <th>Role</th>
             <th>Role Profile</th>
             <th>Modify</th>
@@ -12,7 +11,6 @@
     <tbody>
         <% @role_definitions.each do |role_definition| %>
           <tr>
-              <td><%= role_definition.patient_profile.full_name %></td>
               <td><%= role_definition.role.role %></td>
               <td><%= role_definition.profile.full_name %></td>
               <td><%= link_to 'Show', role_definition %>

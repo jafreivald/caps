@@ -2,7 +2,7 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.json
   def index
-    @resources = Resource.joins(:resource_authorizations, :role_definitions, :profiles).where('profiles.id' => session[:user_id])
+    @resources = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] })
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class ResourcesController < ApplicationController
   # GET /resources/1
   # GET /resources/1.json
   def show
-    @resource = Resource.joins(:resource_authorizations, :role_definitions, :profiles).where('profiles.id' => session[:user_id]).find(params[:id])
+    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
 
     respond_to do |format|
       format.html { redirect_to :action => :edit }
@@ -34,7 +34,8 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
-    @resource = Resource.joins(:resource_authorizations, :role_definitions, :profiles).where('profiles.id' => session[:user_id]).find(params[:id])
+    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
+
     if @resource.resource_type.resource_type == "Patient"
       rts = "Encounter", "Condition", "Observation", "MedicationPrescription", "MedicationDispense"
       @resource_types = ResourceType.where(:resource_type => rts)
@@ -43,14 +44,14 @@ class ResourcesController < ApplicationController
   end
 
   def search
-    @resource = Resource.joins(:resource_authorizations, :role_definitions, :profiles).where('profiles.id' => session[:user_id]).find(params[:id])
+    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
     rt = ResourceType.find(params[:resource_type_id])
     bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { @resource.resource_type.resource_type.camelize(:lower) => @resource.fhir_resource_id }, :accept => :json })
     @entries = bundle["entry"].uniq
   end
   
   def import
-    @resource = Resource.joins(:resource_authorizations, :role_definitions, :profiles).where('profiles.id' => session[:user_id]).find(params[:id])
+    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
     rt = ResourceType.find_by_resource_type(params[:fhir_reference].split("/")[0])
     fhir_id = params[:fhir_reference].split("/")[1]
     
@@ -76,6 +77,8 @@ class ResourcesController < ApplicationController
     respond_to do |format|
       if @resource.save
         if @resource.resource_type.resource_type == "Patient"
+          r = RoleDefinition.where(:profile_id => session[:user_id], :role_id => Role.where(:role => "Designated Representative").first()).first_or_create()
+          ResourceAuthorization.new(:role_id => r.id, :resource_id => @resource.id).first_or_create()
           update_patient_resources
         end
         format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
@@ -119,6 +122,17 @@ class ResourcesController < ApplicationController
   end
   
   private
+  
+  def update_patient_resources
+    bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { :_id => fhir_id }, :accept => :json })
+
+    nr = import_bundle(bundle, @resource.resource_type, @resource.fhir_resource_id)
+    if nr.nil?
+      redirect_to @resource, notice: 'Unable to import new Patient ' + params[:fhir_reference] + '. Resource import failed'
+    else
+      redirect_to nr, notice: 'Resource successfully imported'
+    end
+  end
   
   def import_bundle(bundle, rt, fhir_id)
     ActiveRecord::Base.transaction do

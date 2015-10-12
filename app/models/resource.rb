@@ -90,13 +90,17 @@ class Resource < ActiveRecord::Base
     retval
   end
   
+  def resource_import_link
+    ActionController::Base.helpers.link_to "Import " + self.fhir_resource_id.to_s, Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => self.fhir_base_url.fhir_base_url + self.resource_type.resource_type + "?_id=" + self.fhir_resource_id.to_s), { :method => :post, :class => "btn btn-info" }
+  end
+  
   def resource_label
     case self.resource_type.resource_type
     when "Patient"
-      if my_fields = Field.joins(:resource).where('resources.id' => self.id).any?
+      if (my_fields = Field.where(:resource_id => self.id )).any?
         retval = "Given Names: " + my_fields.where(:resource_id => self.id, :field_type => "givenName").map { |f| f.field_text + " " }.join(",") + "Family Names: " + my_fields.where(:resource_id => self.id, :field_type => "familyName").map { |f| f.field_text + " " }.join(",")
       else
-        retval = ActionController::Base.helpers.link_to "Import Patient " + self.fhir_resource_id.to_s, Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => self.fhir_base_url.fhir_base_url + self.resource_type.resource_type + "?_id=" + self.fhir_resource_id.to_s), { :method => :post, :class => "btn btn-info" }
+        retval = "Patient Not Imported"
       end
     when "Medication" 
       retval = Field.where(:resource_id => self.id, :field_type => "name").map { |f| f.field_text + " " }.join(",")

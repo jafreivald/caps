@@ -10,18 +10,13 @@
       </ul>
     </div>
   <% end %>
-
   <div class="form-group">
-    <%= f.label :patient_profile %><br />
-    <%= f.collection_select :patient_profile_id, Profile.all, :id, :full_name, {}, :class => "form-control" %>
+    <%= f.label :profile %><br />
+    <%= f.collection_select :profile_id, Profile.all, :id, :full_name, {}, :class => "form-control" %>
   </div>
   <div class="form-group">
     <%= f.label :role %><br />
     <%= f.collection_select :role_id, Role.all, :id, :role, {}, :class => "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :profile %><br />
-    <%= f.collection_select :profile_id, Profile.all, :id, :full_name, {}, :class => "form-control" %>
   </div>
   <div class="actions">
     <%= f.submit :class => "submit_record btn btn-primary" %>
