@@ -11,8 +11,7 @@
         <% @contact_methods.each do |contact_method| %>
           <tr>
               <td><%= contact_method.contact_method %></td>
-              <td><%= link_to 'Show', contact_method %>
-                  <%= link_to 'Edit', edit_contact_method_path(contact_method) %>
+              <td><%= link_to 'Edit', edit_contact_method_path(contact_method) %>
                   <%= link_to 'Destroy', contact_method, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

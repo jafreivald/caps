@@ -11,8 +11,7 @@
         <% @fhir_base_urls.each do |fhir_base_url| %>
           <tr>
               <td><%= fhir_base_url.fhir_base_url %></td>
-              <td><%= link_to 'Show', fhir_base_url %>
-                  <%= link_to 'Edit', edit_fhir_base_url_path(fhir_base_url) %>
+              <td><%= link_to 'Edit', edit_fhir_base_url_path(fhir_base_url) %>
                   <%= link_to 'Destroy', fhir_base_url, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

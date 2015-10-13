@@ -17,8 +17,7 @@
               <td><%= activity_update.activity %></td>
               <td><%= activity_update.profile %></td>
               <td><%= activity_update.action %></td>
-              <td><%= link_to 'Show', activity_update %>
-                  <%= link_to 'Edit', edit_activity_update_path(activity_update) %>
+              <td><%= link_to 'Edit', edit_activity_update_path(activity_update) %>
                   <%= link_to 'Destroy', activity_update, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

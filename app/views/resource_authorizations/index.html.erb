@@ -13,8 +13,7 @@
           <tr>
               <td><%= resource_authorization.role_definition.role_information %></td>
               <td><%= resource_authorization.resource.resource_identifier %></td>
-              <td><%= link_to 'Show', resource_authorization %>
-                  <%= link_to 'Edit', edit_resource_authorization_path(resource_authorization) %>
+              <td><%= link_to 'Edit', edit_resource_authorization_path(resource_authorization) %>
                   <%= link_to 'Destroy', resource_authorization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

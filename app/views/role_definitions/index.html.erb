@@ -13,8 +13,7 @@
           <tr>
               <td><%= role_definition.role.role %></td>
               <td><%= role_definition.profile.full_name %></td>
-              <td><%= link_to 'Show', role_definition %>
-                  <%= link_to 'Edit', edit_role_definition_path(role_definition) %>
+              <td><%= link_to 'Edit', edit_role_definition_path(role_definition) %>
                   <%= link_to 'Destroy', role_definition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

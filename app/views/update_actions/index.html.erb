@@ -11,8 +11,7 @@
         <% @update_actions.each do |update_action| %>
           <tr>
               <td><%= update_action.update_action %></td>
-              <td><%= link_to 'Show', update_action %>
-                  <%= link_to 'Edit', edit_update_action_path(update_action) %>
+              <td><%= link_to 'Edit', edit_update_action_path(update_action) %>
                   <%= link_to 'Destroy', update_action, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

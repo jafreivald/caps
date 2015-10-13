@@ -11,8 +11,7 @@
         <% @phone_types.each do |phone_type| %>
           <tr>
               <td><%= phone_type.phone_type %></td>
-              <td><%= link_to 'Show', phone_type %>
-                  <%= link_to 'Edit', edit_phone_type_path(phone_type) %>
+              <td><%= link_to 'Edit', edit_phone_type_path(phone_type) %>
                   <%= link_to 'Destroy', phone_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

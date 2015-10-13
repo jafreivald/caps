@@ -5,9 +5,7 @@
     <th>Field type</th>
     <th>Field text</th>
     <th>Resource</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Modify</th>
   </tr>
 
 <% @fields.each do |field| %>
@@ -15,9 +13,8 @@
     <td><%= field.field_type %></td>
     <td><%= field.field_text %></td>
     <td><%= field.resource %></td>
-    <td><%= link_to 'Show', field %></td>
-    <td><%= link_to 'Edit', edit_field_path(field) %></td>
-    <td><%= link_to 'Destroy', field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Edit', edit_field_path(field) %>
+    <%= link_to 'Destroy', field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

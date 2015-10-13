@@ -13,8 +13,7 @@
           <tr>
               <td><%= resource.resource_type.resource_type %></td>
               <td><%= resource.resource_label.html_safe %></td>
-              <td><%= link_to 'Show', resource %>
-                  <%= link_to 'Edit', edit_resource_path(resource) %>
+              <td><%= link_to 'Edit', edit_resource_path(resource) %>
                   <%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

@@ -19,8 +19,7 @@
               <td><%= activity.severity_level %></td>
               <td><%= activity.role_definition %></td>
               <td><%= activity.activity_type %></td>
-              <td><%= link_to 'Show', activity %>
-                  <%= link_to 'Edit', edit_activity_path(activity) %>
+              <td><%= link_to 'Edit', edit_activity_path(activity) %>
                   <%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

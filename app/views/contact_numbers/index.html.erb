@@ -17,8 +17,7 @@
               <td><%= contact_number.contact_method %></td>
               <td><%= contact_number.phone_number %></td>
               <td><%= contact_number.profile %></td>
-              <td><%= link_to 'Show', contact_number %>
-                  <%= link_to 'Edit', edit_contact_number_path(contact_number) %>
+              <td><%= link_to 'Edit', edit_contact_number_path(contact_number) %>
                   <%= link_to 'Destroy', contact_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>

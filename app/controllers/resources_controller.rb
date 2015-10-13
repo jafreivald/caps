@@ -51,13 +51,16 @@ class ResourcesController < ApplicationController
   end
   
   def import
-    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
+    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id]}).find(params[:id])
     rt = ResourceType.find_by_resource_type(params[:fhir_reference].split("/")[0])
     fhir_id = params[:fhir_reference].split("/")[1]
-    
+    debugger    
     if rt.nil?
       redirect_to @resource, notice: 'Unable to import new resource ' + params[:fhir_reference] + '. Invalid resource type'
     end
+
+    rd = RoleDefinition.where(:profile_id => session[:user_id], :role_id => Role.where(:role => "Designated Representative").first().id).first_or_create()
+    ra = ResourceAuthorization.where(:role_definition_id => rd.id, :resource_id => @resource.id).first_or_create()
 
     bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { :_id => fhir_id }, :accept => :json })
 
@@ -76,9 +79,10 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       if @resource.save
+        r = RoleDefinition.where(:profile_id => session[:user_id], :role_id => Role.where(:role => "Designated Representative").first()).first_or_create()
+        ResourceAuthorization.where(:role_definition_id => r.id, :resource_id => @resource.id).first_or_create()
+
         if @resource.resource_type.resource_type == "Patient"
-          r = RoleDefinition.where(:profile_id => session[:user_id], :role_id => Role.where(:role => "Designated Representative").first()).first_or_create()
-          ResourceAuthorization.new(:role_id => r.id, :resource_id => @resource.id).first_or_create()
           update_patient_resources
         end
         format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
