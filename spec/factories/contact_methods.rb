@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryGirl.define do
-  factory :contact_method do
-    contact_method Faker::Lorem.word
+  factory :contact_method do |f|
+    f.contact_method { Faker::Lorem.word }
   end
 
 end

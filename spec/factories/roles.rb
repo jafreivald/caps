@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryGirl.define do
-  factory :role do
-    role Faker::Name.title
+  factory :role do |f|
+    f.role {Faker::Name.title}
   end
 
 end

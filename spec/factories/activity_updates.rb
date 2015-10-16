@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryGirl.define do
   factory :activity_update do |f|
-    f.narrative Faker::Lorem.paragraph
+    f.narrative { Faker::Lorem.paragraph }
     association :activity
     association :profile
     association :action

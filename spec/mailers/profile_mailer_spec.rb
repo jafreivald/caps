@@ -6,15 +6,15 @@ RSpec.describe ProfileMailer, :type => :mailer do
     
     let(:mail) { ProfileMailer.password_reset(profile) }
 
-    it "sneds user a password reset url" do
+    it "sends profile a password reset url" do
       expect(mail.subject).to eq("Password Reset")
       expect(mail.to).to eq([profile.email])
       expect(mail.from).to eq(["from@example.com"])
-      expect(mail.body.encoded).to match(password_reset_path(user.password_reset_token))
+      expect(mail.body.encoded).to match(password_reset_path(profile.password_reset_token))
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
+      expect(mail.body.encoded).to match("To reset your password, click on the URL below")
     end
   end
 

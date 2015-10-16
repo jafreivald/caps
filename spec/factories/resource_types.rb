@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryGirl.define do
-  factory :resource_type do
-    resource_type Faker::Lorem.word
+  factory :resource_type do |f|
+    f.resource_type {Faker::Lorem.word}
   end
 
 end

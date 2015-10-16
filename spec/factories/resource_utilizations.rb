@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryGirl.define do
-  factory :resource_utilization do
+  factory :resource_utilization do |f|
     association :resource
-    association :fhir_base_url
+    association :activity
   end
 end

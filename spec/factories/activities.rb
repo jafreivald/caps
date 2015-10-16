@@ -1,10 +1,12 @@
+require 'faker'
+
 FactoryGirl.define do
-  factory :activity do
-    base_time Faker::Time.backward(14, :morning)
-    repeat_rule "CREATE A REPEAT RULE IN THE FACTORY"
-    association :severity_level, factory: :severity_level
-    association :role_definition, factory: :role_definition
-    association :activity_type, factory: :activity_type
+  factory :activity do |f|
+    f.base_time { Faker::Time.backward(14, :morning) }
+    f.repeat_rule { Faker::Lorem.words(6) }
+    association :severity_level
+    association :role_definition
+    association :activity_type
   end
 
 end

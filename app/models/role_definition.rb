@@ -3,6 +3,7 @@ class RoleDefinition < ActiveRecord::Base
 
   belongs_to :role
   belongs_to :profile
+  belongs_to :patient_resource, :class_name => :resource
   
   has_many :resource_authorizations
   has_many :resources, :through => :resource_authorizations

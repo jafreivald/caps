@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryGirl.define do
-  factory :severity_level do
-    severity_level Faker::Lorem.word
+  factory :severity_level do |f|
+    f.severity_level { Faker::Number.number(25).to_s }
   end
 
 end

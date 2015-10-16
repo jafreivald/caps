@@ -1,7 +1,9 @@
+require 'faker'
+
 FactoryGirl.define do
-  factory :field do
-    field_type Faker::Lorem.word
-    field_text Faker::Lorem.word
+  factory :field do |f|
+    f.field_type {Faker::Lorem.word}
+    f.field_text {Faker::Lorem.word}
     association :resource
   end
 
