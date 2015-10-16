@@ -1,4 +1,6 @@
 class UpdateActionsController < ApplicationController
+  before_filter :authorize
+  
   # GET /update_actions
   # GET /update_actions.json
   def index

@@ -1,4 +1,6 @@
 class ResourceAuthorizationsController < ApplicationController
+  before_filter :authorize
+  
   # GET /resource_authorizations
   # GET /resource_authorizations.json
   def index

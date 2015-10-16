@@ -1,4 +1,6 @@
 class PhoneNumbersController < ApplicationController
+  before_filter :authorize
+  
   # GET /phone_numbers
   # GET /phone_numbers.json
   def index

@@ -1,4 +1,6 @@
 class ContactMethodsController < ApplicationController
+  before_filter :authorize
+  
   # GET /contact_methods
   # GET /contact_methods.json
   def index

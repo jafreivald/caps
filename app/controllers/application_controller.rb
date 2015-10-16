@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_profile
   
   def authorize
-    redirect_to login_url, alert: "Not Authorized" if current_user.nil?
+    if current_profile.nil?
+      flash[:"alert-success"] = "Not Authorized"
+      redirect_to login_url
+    end
   end
+  helper_method :authorize
 end

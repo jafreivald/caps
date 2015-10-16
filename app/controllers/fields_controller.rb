@@ -1,4 +1,6 @@
 class FieldsController < ApplicationController
+  before_filter :authorize
+  
   # GET /fields
   # GET /fields.json
   def index

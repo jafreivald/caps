@@ -1,4 +1,6 @@
 class PhoneTypesController < ApplicationController
+  before_filter :authorize
+  
   # GET /phone_types
   # GET /phone_types.json
   def index

@@ -1,4 +1,6 @@
 class ResourceUtilizationsController < ApplicationController
+  before_filter :authorize
+  
   # GET /resource_utilizations
   # GET /resource_utilizations.json
   def index

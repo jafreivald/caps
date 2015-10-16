@@ -1,4 +1,6 @@
 class PhoneProvidersController < ApplicationController
+  before_filter :authorize
+  
   # GET /phone_providers
   # GET /phone_providers.json
   def index

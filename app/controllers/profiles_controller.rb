@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+  before_filter :authorize
+  
   # GET /profiles
   # GET /profiles.json
   def index
@@ -74,7 +76,14 @@ class ProfilesController < ApplicationController
   # DELETE /profiles/1.json
   def destroy
     @profile = Profile.find(params[:id])
+    logout_after = false
+    if @profile == current_profile
+      logout_after = true
+    end
     @profile.destroy
+    if logout_after
+      session[:user_id] = nil;
+    end
 
     respond_to do |format|
       format.html { redirect_to profiles_url }

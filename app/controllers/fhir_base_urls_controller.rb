@@ -1,4 +1,6 @@
 class FhirBaseUrlsController < ApplicationController
+  before_filter :authorize
+  
   # GET /fhir_base_urls
   # GET /fhir_base_urls.json
   def index

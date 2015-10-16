@@ -1,4 +1,6 @@
 class SeverityLevelsController < ApplicationController
+  before_filter :authorize
+  
   # GET /severity_levels
   # GET /severity_levels.json
   def index

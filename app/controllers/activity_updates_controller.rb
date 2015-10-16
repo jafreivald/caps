@@ -1,4 +1,6 @@
 class ActivityUpdatesController < ApplicationController
+  before_filter :authorize
+  
   # GET /activity_updates
   # GET /activity_updates.json
   def index
