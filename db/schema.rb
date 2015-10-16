@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151015233338) do
+ActiveRecord::Schema.define(:version => 20151016211256) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -65,12 +65,12 @@ ActiveRecord::Schema.define(:version => 20151015233338) do
   add_index "contact_methods", ["contact_method"], :name => "index_contact_methods_on_contact_method", :unique => true
 
   create_table "contact_numbers", :force => true do |t|
-    t.boolean  "preferred"
+    t.boolean  "preferred",         :default => true
     t.integer  "contact_method_id"
     t.integer  "phone_number_id"
     t.integer  "profile_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
   add_index "contact_numbers", ["contact_method_id"], :name => "index_contact_numbers_on_contact_method_id"
