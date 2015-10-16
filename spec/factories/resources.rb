@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :resource do
-    resource "MyString"
+    resource Faker::Commerce.product_name
   end
-
 end

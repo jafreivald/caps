@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :contact_number do
     preferred false
-contact_method nil
-phone_number nil
-profile nil
+    association :phone_number
+    association :contact_method
+    association :profile
   end
 
 end

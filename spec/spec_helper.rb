@@ -16,7 +16,15 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+
 RSpec.configure do |config|
+  require "capybara/rspec"
+
+  RSpec.configure do |config|
+    config.include Capybara::DSL, :type => :request
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -40,6 +48,10 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  require 'support/mailer_macros'
+  config.include(MailerMacros)
+  config.before(:each) { reset_emails }
+  
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

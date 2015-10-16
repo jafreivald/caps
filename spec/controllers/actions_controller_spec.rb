@@ -18,17 +18,23 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
+require 'faker'
+
 RSpec.describe ActionsController, :type => :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Action. As you add validations to Action, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      :action => Faker::Lorem.sentence
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      :action => nil
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -81,9 +87,9 @@ RSpec.describe ActionsController, :type => :controller do
         expect(assigns(:action)).to be_persisted
       end
 
-      it "redirects to the created action" do
+      it "redirects to edit the created action" do
         post :create, {:action => valid_attributes}, valid_session
-        expect(response).to redirect_to(Action.last)
+        expect(response).to redirect_to(edit_action_path(Action.last))
       end
     end
 

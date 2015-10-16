@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :phone_type do
-    phone_type "MyString"
+    phone_type Faker::Lorem.word
   end
 
 end

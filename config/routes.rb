@@ -63,13 +63,22 @@ CAPS::Application.routes.draw do
 
   resources :update_actions
 
-
+  resources :profiles
+  resources :sessions do
+    member do
+      get 'password_reset'
+      post 'send_confirmation_email'
+      get 'new_password'
+    end
+  end  
+  
   get 'signup', to: 'profiles#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'password_reset', to: 'sessions#password_reset', as: 'password_reset'
+  post 'password_reset', to: 'sessions#send_confirmation_email', as: 'password_reset'
+  get 'new_password', to: 'sessions#new_password', as: 'new_password'
   
-  resources :profiles
-  resources :sessions
 
 
   # The priority is based upon order of creation:

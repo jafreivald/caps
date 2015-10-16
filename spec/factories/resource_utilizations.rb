@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :resource_utilization do
-    resource nil
-fhir_base_url nil
+    association :resource
+    association :fhir_base_url
   end
-
 end
