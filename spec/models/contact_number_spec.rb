@@ -22,4 +22,10 @@ RSpec.describe ContactNumber, :type => :model do
     cn.reload
     expect(cn.preferred).to eq(true)
   end
+  
+  it "will accept a preferred flag set to false" do
+    cn = FactoryGirl.create(:contact_number, :preferred => false)
+    cn.reload
+    expect(cn.preferred).to eq(false)
+  end
 end

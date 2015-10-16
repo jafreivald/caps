@@ -44,7 +44,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        session[:user_id]=@profile.userid
+        session[:user_id]=@profile.id
         format.html { flash[:"alert-success"] = 'Profile was successfully created.'; redirect_to root_url}
         format.json { render json: @profile, status: :created, location: @profile }
       else
