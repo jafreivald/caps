@@ -5,9 +5,9 @@ class Profile < ActiveRecord::Base
   
   validates :password, :password_confirmation, :presence => true, :on => :create
   
-  validates :email, :first_name, :last_name, :userid, :presence => true
+  validates :first_name, :last_name, :userid, :presence => true
+  validates :email, :presence => true, :uniqueness => true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
   
-  validates_uniqueness_of :email
   validates_uniqueness_of :userid
   
   def full_name

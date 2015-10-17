@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   
   def authorize
     if current_profile.nil?
-      flash[:"alert-success"] = "Not Authorized"
+      flash[:"alert-danger"] = "Not Authorized"
       redirect_to login_url
     end
   end

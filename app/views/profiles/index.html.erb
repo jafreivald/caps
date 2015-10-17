@@ -12,7 +12,7 @@
     </thead>
     <tbody>
         <% @profiles.each do |profile| %>
-          <tr>
+          <tr id="<%= profile.id %>">
               <td><%= profile.first_name %></td>
               <td><%= profile.last_name %></td>
               <td><%= profile.email %></td>

@@ -18,6 +18,11 @@ RSpec.describe Profile, :type => :model do
     expect(FactoryGirl.build(:profile, :password => "ThisPassword", :password_confirmation => "ThatPassword")).to be_invalid
   end
   
+  it "requires a valid format for the email" do
+    expect(FactoryGirl.build(:profile, :email => "this@that.com")).to be_valid
+    expect(FactoryGirl.build(:profile, :email => "not an email")).to be_invalid
+  end
+  
   describe "#send_password_reset" do
     
     it "generates a unique password_reset_token each time" do

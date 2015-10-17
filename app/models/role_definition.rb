@@ -8,10 +8,9 @@ class RoleDefinition < ActiveRecord::Base
   has_many :resource_authorizations
   has_many :resources, :through => :resource_authorizations
   
-  validates :role, :presence => true
-  validates :profile, :presence => true
+  validates :profile, :role, :patient_resource, :presence => true
   
   def role_information
-    "Profile: " + (self.profile.nil? ? "Unassigned" : self.profile.full_name) + ", Role: " + (self.role.nil? ? "Unassigned" : self.role.role)
+    "Profile: " + self.profile.full_name + ", Role: " + self.role.role + "Patient: " + self.patient_resource.resource_label
   end
 end

@@ -7,6 +7,6 @@ FactoryGirl.define do
     f.patient_resource_id { p.id }
     association :role
     association :profile
-    #association :patient_resource, :factory => :resource
+    association :resource, :factory => :patient_resource
   end
 end

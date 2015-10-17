@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   before_filter :authorize
+  skip_before_filter :authorize, :only => [ :new, :create ]
   
   # GET /profiles
   # GET /profiles.json
@@ -80,13 +81,14 @@ class ProfilesController < ApplicationController
     if @profile == current_profile
       logout_after = true
     end
+    name = @profile.full_name
     @profile.destroy
     if logout_after
       session[:user_id] = nil;
     end
 
     respond_to do |format|
-      format.html { redirect_to profiles_url }
+      format.html { flash[:"alert-success"] = "#{name}'s profile was successfully deleted."; redirect_to current_profile.nil? ? login_path : profiles_url }
       format.json { head :no_content }
     end
   end

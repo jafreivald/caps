@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
     profile = Profile.find_by_userid(params[:userid])
     if profile && profile.authenticate(params[:password])
       session[:user_id] = profile.id
-      redirect_to root_url, notice: "Log in successful"
+      flash[:"alert-success"] = "Log in successful"
+      redirect_to root_url
     else
       flash[:"alert-danger"] = "User ID or password is incorrect"
       render :action => :new
