@@ -12,4 +12,12 @@ RSpec.describe ResourceAuthorization, :type => :model do
   it "must have a resource" do
     expect(FactoryGirl.build(:resource_authorization, :resource => nil)).to be_invalid
   end
+  
+  it "must get deleted when the resource is deleted" do
+    ra = FactoryGirl.create(:resource_authorization)
+    rs = ra.resource
+    rs.destroy
+    expect(rs.persisted?).to be(false)
+    expect(ResourceAuthorization.exists?(ra)).to be(false)    
+  end
 end
