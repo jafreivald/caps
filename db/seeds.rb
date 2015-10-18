@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-puts "Resources Types"
+puts "Resource Types"
 
 resource_type_list = [
   'Condition',
@@ -25,11 +25,22 @@ end
 puts "FHIR Base URLs"
 
 fhir_list = [
-  'http://polaris.i3l.gatech.edu:8080/gt-fhir-webapp/base/'
+  'http://polaris.i3l.gatech.edu:8080/gt-fhir-webapp/base/',
+  'http://localhost/'
 ]
 
 fhir_list.each do |url|
 	FhirBaseUrl.where(:fhir_base_url => url).first_or_create()
+end
+
+puts "Default Resources"
+
+resource_list = [
+  [ 'No Patient Assigned', 'http://localhost/', -1 ]
+]
+
+resource_list.each do |rt, url, rid|
+	Resource.where(:resource_type_id => ResourceType.where(:resource_type => rt).first_or_create().id, :fhir_base_url_id => FhirBaseUrl.where(:fhir_base_url => url).first_or_create().id, :fhir_resource_id => rid).first_or_create()
 end
 
 puts "Severity Levels"
@@ -124,7 +135,8 @@ rl_list = [
   'Full Support',
   'Medicines',
   'Logistics',
-  'Transport'
+  'Transport',
+  'Resource Creator'
 ]
 
 rl_list.each do |r|

@@ -50,6 +50,35 @@ RSpec.describe "Resources", :type => :request do
         expect(current_path).to eq(resources_path)
         click_link "Edit"
       end
+      it "can add a resource with a non-patient resource type" do
+        rt = FactoryGirl.create(:resource_type)
+        visit new_resource_path
+        expect(current_path).to eq(new_resource_path)
+        expect(page).to have_http_status(200)
+        select "http://polaris.i3l.gatech.edu:8080/gt-fhir-webapp/base/", :from => "resource_fhir_base_url_id"
+        select rt.resource_type, :from => "resource_resource_type_id"
+        patient_id = Faker::Number.number(2)
+        fill_in "Fhir resource", :with => patient_id.to_s
+        click_button "Create Resource"
+        expect(page).to have_content("Resource was successfully created.")
+      end
+      it "can select the resource from the index after it is created." do
+        rt = FactoryGirl.create(:resource_type)
+        visit new_resource_path
+        expect(current_path).to eq(new_resource_path)
+        expect(page).to have_http_status(200)
+        select "http://polaris.i3l.gatech.edu:8080/gt-fhir-webapp/base/", :from => "resource_fhir_base_url_id"
+        select rt.resource_type, :from => "resource_resource_type_id"
+        patient_id = Faker::Number.number(2)
+        fill_in "Fhir resource", :with => patient_id.to_s
+        click_button "Create Resource"
+        expect(page).to have_content("Resource was successfully created.")
+        url = page.current_path
+        visit resources_path
+        expect(current_path).to eq(resources_path)
+        find(:xpath, "//a[@href='#{url}']").click
+        expect(current_path).to eq(url)
+      end
     end
   end
 end

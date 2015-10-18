@@ -136,7 +136,9 @@ class Resource < ActiveRecord::Base
         retval = ActionController::Base.helpers.link_to "Import Prescription: ", Rails.application.routes.url_helpers.import_resource_path(self, :fhir_reference => self.resource_type.resource_type + "/" + self.fhir_resource_id.to_s), { :method => :post, :class => "btn btn-info" }
       end
     when "Observation"
-      retval = Field.where(:resource_id => self.id, :field_type => "value")..map { |f| f.field_text + " " }.join(",")
+      retval = Field.where(:resource_id => self.id, :field_type => "value").map { |f| f.field_text + " " }.join(",")
+    else
+      retval = self.resource_type.resource_type + " " + self.id.to_s
     end
     retval
   end

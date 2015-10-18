@@ -80,13 +80,17 @@ class ResourcesController < ApplicationController
     @resource = Resource.new(params[:resource])
 
     if @resource.save
+      rl = Role.where(:role => "Resource Creator").first()
       if @resource.resource_type.resource_type == "Patient"
-        rl = Role.where(:role => "Designated Representative").first()
         rd = RoleDefinition.where(:profile_id => session[:user_id], :role_id => rl, :patient_resource_id => @resource.id).first_or_create()
         ra = ResourceAuthorization.where(:role_definition_id => rd.id, :resource_id => @resource.id).first_or_create()
         if update_patient_resources.nil?
           @resource.destroy
         end
+      else
+        np = Resource.where(:resource_type_id => ResourceType.where(:resource_type => "No Patient Assigned").first.id, :fhir_resource_id => -1).first()
+        rd = RoleDefinition.where(:profile_id => session[:user_id], :role_id => rl, :patient_resource_id => np).first_or_create()
+        ra = ResourceAuthorization.where(:role_definition_id => rd.id, :resource_id => @resource.id).first_or_create()
       end
     end
     respond_to do |format|
