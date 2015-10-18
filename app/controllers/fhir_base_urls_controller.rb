@@ -74,8 +74,14 @@ class FhirBaseUrlsController < ApplicationController
   # DELETE /fhir_base_urls/1
   # DELETE /fhir_base_urls/1.json
   def destroy
-    @fhir_base_url = FhirBaseUrl.find(params[:id])
-    @fhir_base_url.destroy
+    begin
+      @fhir_base_url = FhirBaseUrl.find(params[:id])
+      @fhir_base_url.destroy
+    rescue ActiveRecord::DeleteRestrictionError
+      flash[:"alert-danger"] = "Could not delete the URL because there are resources assigned to it."
+      redirect_to resources_path
+      return
+    end
 
     respond_to do |format|
       format.html { redirect_to fhir_base_urls_url }

@@ -74,9 +74,14 @@ class ResourceTypesController < ApplicationController
   # DELETE /resource_types/1
   # DELETE /resource_types/1.json
   def destroy
+    begin
     @resource_type = ResourceType.find(params[:id])
     @resource_type.destroy
-
+    rescue ActiveRecord::DeleteRestrictionError
+      flash[:"alert-danger"] = "Could not delete the resource type because there are resources assigned to this type."
+      redirect_to resources_path
+      return
+    end
     respond_to do |format|
       format.html { redirect_to resource_types_url }
       format.json { head :no_content }

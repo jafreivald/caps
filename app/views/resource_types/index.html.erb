@@ -1,18 +1,21 @@
 <h1>Listing resource_types</h1>
 
-<table>
-  <tr>
-    <th>Resource type</th>
-    <th>Modify</th>
-  </tr>
-
-<% @resource_types.each do |resource_type| %>
-  <tr>
-    <td><%= resource_type.resource_type %></td>
-    <td><%= link_to 'Edit', edit_resource_type_path(resource_type) %>
-        <%= link_to 'Destroy', resource_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table class="display">
+    <thead>
+        <tr>
+            <th>Resource type</th>
+            <th>Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @resource_types.each do |resource_type| %>
+          <tr>
+              <td><%= resource_type.resource_type %></td>
+              <td><%= link_to 'Edit', edit_resource_type_path(resource_type) %>
+                  <%= link_to 'Destroy', resource_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+    </tbody>
 </table>
 
 <br />
