@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  #force_ssl
+  if ENV['RAILS_ENV'] == "production"
+    force_ssl
+  end
   
   private
   def current_profile
@@ -15,7 +17,9 @@ class ApplicationController < ActionController::Base
     if current_profile.nil?
       flash[:"alert-danger"] = "Not Authorized"
       redirect_to login_url
+      return false
     end
+    return true
   end
   helper_method :authorize
 end

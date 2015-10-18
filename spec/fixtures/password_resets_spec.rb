@@ -30,10 +30,10 @@ RSpec.describe "Password Reset", :type => :request do
   it "updates the profile password when confirmation matches" do
     p = FactoryGirl.create(:profile, :password_reset_token => "atoken", :password_reset_sent_at => 1.hour.ago)
     visit new_password_path(:password_reset_token => p.password_reset_token)
+    expect(current_path).to eq(new_password_path)
     fill_in "Password", :with => "anewpassword"
     fill_in "Password confirmation", :with => "anewpassword"
     click_button "Update Password"
-    
     expect(current_path).to eq(edit_profile_path(p))
     expect(page).to have_content("Profile was successfully updated.")
   end

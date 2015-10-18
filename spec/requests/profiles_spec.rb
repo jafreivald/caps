@@ -54,6 +54,7 @@ RSpec.describe "Profile management:", :type => :request do
       fill_in "Userid", :with => p.userid
       fill_in "Password", :with => 'pw'
       click_button "Log In"
+      expect(page).to have_content("Log in successful")
       
       #Delete this user's profile
       visit profiles_path

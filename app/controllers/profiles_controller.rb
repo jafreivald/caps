@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   before_filter :authorize
-  skip_before_filter :authorize, :only => [ :new, :create ]
+  skip_before_filter :authorize, :only => [ :new, :create, :update ]
   
   # GET /profiles
   # GET /profiles.json
@@ -60,7 +60,23 @@ class ProfilesController < ApplicationController
   # PUT /profiles/1
   # PUT /profiles/1.json
   def update
-    @profile = Profile.find(params[:id])
+    if params[:profile][:password_reset_token].nil? || (@profile = Profile.find_by_password_reset_token(params[:profile][:password_reset_token])).nil?
+      if authorize == false
+        return
+      end
+    else
+      if @profile != nil && @profile.has_expired_password_reset_token
+        flash[:"alert-danger"] = "Password reset token has expired"
+        redirect_to root_url
+        return
+      else
+        session[:user_id] = @profile.id
+      end
+    end
+    
+    if @profile.nil?
+      @profile = Profile.find(params[:id])
+    end
 
     respond_to do |format|
       if @profile.update_attributes(params[:profile])

@@ -36,7 +36,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
-    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
+    @resource = Resource.joins(:resource_authorizations, :role_definitions).find(params[:id])
 
     if @resource.resource_type.resource_type == "Patient"
       rts = "Encounter", "Condition", "Observation", "MedicationPrescription", "MedicationDispense"
@@ -56,7 +56,7 @@ class ResourcesController < ApplicationController
     @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id]}).find(params[:id])
     rt = ResourceType.find_by_resource_type(params[:fhir_reference].split("/")[0])
     fhir_id = params[:fhir_reference].split("/")[1]
-    debugger    
+        
     if rt.nil?
       redirect_to @resource, notice: 'Unable to import new resource ' + params[:fhir_reference] + '. Invalid resource type'
     end
@@ -79,18 +79,22 @@ class ResourcesController < ApplicationController
   def create
     @resource = Resource.new(params[:resource])
 
-    respond_to do |format|
-      if @resource.save
-        r = RoleDefinition.where(:profile_id => session[:user_id], :role_id => Role.where(:role => "Designated Representative").first()).first_or_create()
-        ResourceAuthorization.where(:role_definition_id => r.id, :resource_id => @resource.id).first_or_create()
-
-        if @resource.resource_type.resource_type == "Patient"
-          update_patient_resources
+    if @resource.save
+      if @resource.resource_type.resource_type == "Patient"
+        rl = Role.where(:role => "Designated Representative").first()
+        rd = RoleDefinition.where(:profile_id => session[:user_id], :role_id => rl, :patient_resource_id => @resource.id).first_or_create()
+        ra = ResourceAuthorization.where(:role_definition_id => rd.id, :resource_id => @resource.id).first_or_create()
+        if update_patient_resources.nil?
+          @resource.destroy
         end
-        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
+      end
+    end
+    respond_to do |format|
+      if @resource.persisted?
+        format.html { flash[:"alert-success"] = 'Resource was successfully created.'; redirect_to edit_resource_path(@resource) }
         format.json { render json: @resource, status: :created, location: @resource }
       else
-        format.html { render action: "new" }
+        format.html { flash[:"alert-warning"] = 'Error creating resource.'; render action: "new" }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
@@ -106,10 +110,10 @@ class ResourcesController < ApplicationController
         if @resource.resource_type.resource_type == "Patient"
           update_patient_resources
         end
-        format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
+        format.html { flash[:"alert-success"] = 'Resource was successfully updated.'; redirect_to edit_resource_path(@resource) }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { flash[:"alert-warning"] = 'Error updating resource.'; render action: "edit" }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
@@ -130,14 +134,8 @@ class ResourcesController < ApplicationController
   private
   
   def update_patient_resources
-    bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { :_id => fhir_id }, :accept => :json })
-
-    nr = import_bundle(bundle, @resource.resource_type, @resource.fhir_resource_id)
-    if nr.nil?
-      redirect_to @resource, notice: 'Unable to import new Patient ' + params[:fhir_reference] + '. Resource import failed'
-    else
-      redirect_to nr, notice: 'Resource successfully imported'
-    end
+    bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + @resource.resource_type.resource_type, { :params => { :_id => @resource.fhir_resource_id }, :accept => :json })
+    import_bundle(bundle, @resource.resource_type, @resource.fhir_resource_id)
   end
   
   def import_bundle(bundle, rt, fhir_id)

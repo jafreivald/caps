@@ -23,7 +23,4 @@ RSpec.describe Resource, :type => :model do
     expect(FactoryGirl.create(:resource, :resource_type => rt, :fhir_base_url => furl, :fhir_resource_id => 1)).to be_valid
     expect(FactoryGirl.build(:resource, :resource_type => rt, :fhir_base_url => furl, :fhir_resource_id => 1)).to be_invalid
   end
-  describe "Resource fetching and parsing functions" do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
 end
