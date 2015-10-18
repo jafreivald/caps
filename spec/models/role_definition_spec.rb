@@ -16,4 +16,14 @@ RSpec.describe RoleDefinition, :type => :model do
   it "must have a patient resource" do
     expect(FactoryGirl.build(:role_definition, :patient_resource => nil)).to be_invalid
   end
+  
+  it "must get cascade deleted when the patient resource is destroyed" do
+    rd = FactoryGirl.create(:role_definition)
+    rs = rd.patient_resource
+    rs.destroy
+    expect(rd.patient_resource.persisted?).to be(false)
+    expect(RoleDefinition.exists?(rd)).to be(false)
+  end
+  
+  
 end

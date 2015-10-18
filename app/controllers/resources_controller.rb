@@ -36,7 +36,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
-    @resource = Resource.joins(:resource_authorizations, :role_definitions).find(params[:id])
+    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
 
     if @resource.resource_type.resource_type == "Patient"
       rts = "Encounter", "Condition", "Observation", "MedicationPrescription", "MedicationDispense"

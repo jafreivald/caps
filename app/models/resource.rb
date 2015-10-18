@@ -6,8 +6,9 @@ class Resource < ActiveRecord::Base
   belongs_to :resource_type
   belongs_to :fhir_base_url
   
-  has_many :resource_authorizations
+  has_many :resource_authorizations, :dependent => :destroy
   has_many :role_definitions, :through => :resource_authorizations
+  has_many :patient_role_definitions, :class_name => 'RoleDefinition', :inverse_of => :patient_resource, :foreign_key => 'patient_resource_id', :dependent => :destroy
   has_many :profiles, :through => :role_definitions
   
   validates :resource_type_id, :fhir_base_url_id, :fhir_resource_id, :presence => true
