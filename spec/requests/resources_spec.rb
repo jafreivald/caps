@@ -46,9 +46,11 @@ RSpec.describe "Resources", :type => :request do
         fill_in "Fhir resource", :with => patient_id.to_s
         click_button "Create Resource"
         expect(page).to have_content("Resource was successfully created.")
+        url = page.current_path
         visit resources_path
         expect(current_path).to eq(resources_path)
-        click_link "Edit"
+        find(:xpath, "//a[@href='#{url}']").click
+        expect(current_path).to eq(url)
       end
       it "can add a resource with a non-patient resource type" do
         rt = FactoryGirl.create(:resource_type)

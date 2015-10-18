@@ -4,7 +4,7 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.json
   def index
-    @resources = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] })
+    @resources = Resource.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +15,7 @@ class ResourcesController < ApplicationController
   # GET /resources/1
   # GET /resources/1.json
   def show
-    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
+    @resource = Resource.find(params[:id])
 
     respond_to do |format|
       format.html { redirect_to :action => :edit }
@@ -36,7 +36,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
-    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
+    @resource = Resource.find(params[:id])
 
     if @resource.resource_type.resource_type == "Patient"
       rts = "Encounter", "Condition", "Observation", "MedicationPrescription", "MedicationDispense"
@@ -46,14 +46,14 @@ class ResourcesController < ApplicationController
   end
 
   def search
-    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id] }).find(params[:id])
+    @resource = Resource.find(params[:id])
     rt = ResourceType.find(params[:resource_type_id])
     bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + rt.resource_type, { :params => { @resource.resource_type.resource_type.camelize(:lower) => @resource.fhir_resource_id }, :accept => :json })
     @entries = bundle["entry"].uniq
   end
   
   def import
-    @resource = Resource.joins(:resource_authorizations, :role_definitions).where(:role_definitions => { :profile_id => session[:user_id]}).find(params[:id])
+    @resource = Resource.find(params[:id])
     rt = ResourceType.find_by_resource_type(params[:fhir_reference].split("/")[0])
     fhir_id = params[:fhir_reference].split("/")[1]
         
