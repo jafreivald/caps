@@ -39,7 +39,6 @@ class Activity < ActiveRecord::Base
   private
   def import_base_time_string
     if self.base_time_string
-      debugger
       self.base_time = self.base_time_string.to_datetime
     end
   end
