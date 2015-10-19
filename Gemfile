@@ -10,8 +10,12 @@ gem 'pg'
 # Bootstrap for sass
 gem 'sass-rails',   '~> 3.2.3'
 gem 'bootstrap-sass'
-
 gem 'coffee-rails', '~> 3.2.1'
+
+# Calendar management
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+gem 'ice_cube'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', :platforms => :ruby

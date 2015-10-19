@@ -1,4 +1,6 @@
 class ContactNumber < ActiveRecord::Base
+  nilify_blanks
+
   before_validation do
     default_preferred
   end

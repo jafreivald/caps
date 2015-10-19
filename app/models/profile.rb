@@ -1,4 +1,6 @@
 class Profile < ActiveRecord::Base
+  nilify_blanks
+
   has_secure_password
   
   attr_accessible :email, :first_name, :last_name, :userid, :password, :password_confirmation, :password_reset_token, :password_reset_sent_at

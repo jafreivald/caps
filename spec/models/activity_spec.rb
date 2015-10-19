@@ -21,7 +21,7 @@ RSpec.describe Activity, :type => :model do
     expect(FactoryGirl.build(:activity, :base_time => nil)).to be_invalid
   end
   
-  it "must have a repeat rule" do
-    expect(FactoryGirl.build(:activity, :repeat_rule => nil)).to be_invalid
+  it "may have a repeat rule" do
+    expect(FactoryGirl.build(:activity, :repeat_rule => nil)).to be_valid
   end
 end

@@ -1,4 +1,6 @@
 class Resource < ActiveRecord::Base
+  nilify_blanks
+
   require 'rest-client'
   
   attr_accessible :fhir_base_url_id, :resource_type_id, :fhir_resource_id

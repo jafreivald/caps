@@ -5,7 +5,8 @@ class ActivitiesController < ApplicationController
   # GET /activities.json
   def index
     @activities = Activity.all
-
+    @activities_by_date = @activities.group_by(&:date)
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @activities }
@@ -46,7 +47,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity.save
-        format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
+        format.html { flash[:"alert-success"] = 'Activity was successfully created.'; redirect_to edit_activity_path(@activity)  }
         format.json { render json: @activity, status: :created, location: @activity }
       else
         format.html { render action: "new" }
@@ -62,7 +63,7 @@ class ActivitiesController < ApplicationController
 
     respond_to do |format|
       if @activity.update_attributes(params[:activity])
-        format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
+        format.html { flash[:"alert-success"] = 'Activity was successfully updated.'; redirect_to edit_activity_path(@activity) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

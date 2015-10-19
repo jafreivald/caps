@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151016211256) do
+ActiveRecord::Schema.define(:version => 20151018233315) do
 
   create_table "actions", :force => true do |t|
     t.string   "action"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20151016211256) do
   add_index "actions", ["action"], :name => "index_actions_on_action", :unique => true
 
   create_table "activities", :force => true do |t|
-    t.string   "base_time"
+    t.datetime "base_time"
     t.string   "repeat_rule"
     t.integer  "severity_level_id"
     t.integer  "role_definition_id"

@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require jquery.minicolors
 //= require bootstrap-sprockets
+//= require moment
+//= require bootstrap-datetimepicker
 //= require dataTables/jquery.dataTables
 //= require_tree .

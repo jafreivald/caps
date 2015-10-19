@@ -1,37 +1,42 @@
 <%= form_for(@activity) do |f| %>
   <% if @activity.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+        <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
 
-      <ul>
-      <% @activity.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+            <% @activity.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+        </ul>
     </div>
   <% end %>
 
   <div class="form-group">
-    <%= f.label :activity_type %><br />
-    <%= f.collection_select :activity_type_id, ActivityType.all, :id, :activity_type, {}, :class => "form-control" %>
+      <%= f.label :activity_type %><br />
+      <%= f.collection_select :activity_type_id, ActivityType.all, :id, :activity_type, {}, :class => "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :base_time %><br />
-    <%= f.text_field :base_time, :class => "form-control" %>
+      <%= f.label "Date and Time", :base_time_string %>
+      <div class='input-group date' id='datetimepicker' data-start-datetime="<%= @activity.base_time_to_s %>" data-format="yyyy-MM-dd hh:mm:ss" >
+          <%= f.text_field :base_time_string, :class => "form-control" %>
+          <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+      </div>
   </div>
   <div class="form-group">
-    <%= f.label :repeat_rule %><br />
-    <%= f.text_field :repeat_rule, :class => "form-control" %>
+      <%= f.label :repeat_rule %><br />
+      <%= f.text_field :repeat_rule, :class => "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :severity_level %><br />
-    <%= f.collection_select :severity_level_id, SeverityLevel.all, :id, :severity_level, {}, :class => "form-control" %>
+      <%= f.label :severity_level %><br />
+      <%= f.collection_select :severity_level_id, SeverityLevel.all, :id, :severity_level, {}, :class => "form-control" %>
   </div>
   <div class="form-group">
-    <%= f.label :role_definition %><br />
-    <%= f.collection_select :role_definition_id, RoleDefinition.all, :id, :role_information, {}, :class => "form-control" %>
+      <%= f.label :role_definition %><br />
+      <%= f.collection_select :role_definition_id, RoleDefinition.all, :id, :role_information, {}, :class => "form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit :class => "submit_record btn btn-primary" %>
+      <%= f.submit :class => "submit_record btn btn-primary" %>
   </div>
 <% end %>

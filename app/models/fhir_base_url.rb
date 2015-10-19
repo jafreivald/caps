@@ -1,4 +1,6 @@
 class FhirBaseUrl < ActiveRecord::Base
+  nilify_blanks
+
   attr_accessible :fhir_base_url
   
   has_many :resources, :dependent => :restrict

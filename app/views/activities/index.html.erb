@@ -1,4 +1,24 @@
-<h1>Listing activities</h1>
+<h1>Activities Calendar</h1>
+
+<div id="activities">
+    <h2 id="month">
+        <%= link_to "<", date: @date.prev_month %>
+        <%= @date.strftime("%B %Y") %>
+        <%= link_to ">", date: @date.next_month %>
+    </h2>
+    <%= calendar @date do |date| %>
+      <%= date.day %>
+      <ul>
+          <% @activities.each do |activity| %>
+            <% if activity.occurs_on?(date) %>
+              <li><%= link_to activity.activity_type.activity_type, activity %></li>
+            <% end %>
+          <% end %>
+      </ul>
+    <% end %>
+</div>
+
+<h1>Activities List</h1>
 
 <table class="display">
     <thead>
@@ -16,9 +36,9 @@
           <tr>
               <td><%= activity.base_time %></td>
               <td><%= activity.repeat_rule %></td>
-              <td><%= activity.severity_level %></td>
-              <td><%= activity.role_definition %></td>
-              <td><%= activity.activity_type %></td>
+              <td><%= activity.severity_level.severity_level %></td>
+              <td><%= activity.role_definition.role_information %></td>
+              <td><%= activity.activity_type.activity_type %></td>
               <td><%= link_to 'Edit', edit_activity_path(activity) %>
                   <%= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>

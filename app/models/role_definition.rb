@@ -1,4 +1,6 @@
 class RoleDefinition < ActiveRecord::Base
+  nilify_blanks
+
   attr_accessible :patient_profile_id, :role_id, :profile_id
 
   belongs_to :role

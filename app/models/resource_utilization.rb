@@ -1,4 +1,6 @@
 class ResourceUtilization < ActiveRecord::Base
+  nilify_blanks
+
   belongs_to :resource
   belongs_to :activity
   
