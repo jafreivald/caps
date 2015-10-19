@@ -25,7 +25,7 @@ RSpec.describe "Activities", :type => :request do
       it "can create an activity" do
         visit new_activity_path
         select "Fill Prescription", :from => "activity_activity_type_id"
-        fill_in "Base time", :with => 1.hour.from_now
+        fill_in "Date and Time", :with => 1.hour.from_now
         select "Low", :from => "activity_severity_level_id"
         click_button "Create Activity"
         expect(page).to have_content("Activity was successfully created.")
