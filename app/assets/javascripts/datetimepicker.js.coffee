@@ -1,4 +1,4 @@
 jQuery ->
     $('#datetimepicker').datetimepicker({
-        defaultDate: $(this).attr('data-start-datetime')
+        format: 'YYYY-MM-DD hh:mm:ss'
     })
