@@ -12,6 +12,7 @@ class Resource < ActiveRecord::Base
   has_many :role_definitions, :through => :resource_authorizations
   has_many :patient_role_definitions, :class_name => 'RoleDefinition', :inverse_of => :patient_resource, :foreign_key => 'patient_resource_id', :dependent => :destroy
   has_many :profiles, :through => :role_definitions
+  has_many :fields, :dependent => :destroy
   
   validates :resource_type_id, :fhir_base_url_id, :fhir_resource_id, :presence => true
   validates_associated :resource_type, :fhir_base_url
@@ -148,7 +149,6 @@ class Resource < ActiveRecord::Base
   def resource_info
     r_id = String.new
     Field.where(:resource_id => self.id).each do |f|
-      #debugger
       case f.field_type
       when "patient", "medication", "condition", "encounter", "medicationDispense", "medicationPrescription", "observation" 
         rt = ResourceType.find_by_resource_type(f.field_text.split("/")[0])

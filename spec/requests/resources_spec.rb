@@ -17,6 +17,7 @@ RSpec.describe "Resources", :type => :request do
         fill_in "Password", :with => 'pw'
         click_button "Log In"
       }
+      
       it "can visit the index page and click a new resource link that takes them to a new resource" do
         visit resources_path
         expect(current_path).to eq(resources_path)
@@ -25,6 +26,7 @@ RSpec.describe "Resources", :type => :request do
         expect(current_path).to eq(new_resource_path)
         expect(page).to have_http_status(200)
       end
+      
       it "can add a Patient" do
         visit new_resource_path
         expect(current_path).to eq(new_resource_path)
@@ -36,6 +38,7 @@ RSpec.describe "Resources", :type => :request do
         click_button "Create Resource"
         expect(page).to have_content("Resource was successfully created.")
       end
+      
       it "can select the patient from the index after it is loaded." do
         visit new_resource_path
         expect(current_path).to eq(new_resource_path)
@@ -52,6 +55,7 @@ RSpec.describe "Resources", :type => :request do
         find(:xpath, "//a[@href='#{url}']").click
         expect(current_path).to eq(url)
       end
+      
       it "can add a resource with a non-patient resource type" do
         rt = FactoryGirl.create(:resource_type)
         visit new_resource_path
@@ -64,6 +68,7 @@ RSpec.describe "Resources", :type => :request do
         click_button "Create Resource"
         expect(page).to have_content("Resource was successfully created.")
       end
+      
       it "can select the resource from the index after it is created." do
         rt = FactoryGirl.create(:resource_type)
         visit new_resource_path
@@ -81,6 +86,111 @@ RSpec.describe "Resources", :type => :request do
         find(:xpath, "//a[@href='#{url}']").click
         expect(current_path).to eq(url)
       end
+        
+      it "must import Patient resource data" do
+        furl = FhirBaseUrl.first()
+        rt = ResourceType.where(:resource_type => "Patient").first()
+        rs = FactoryGirl.create(:resource, :fhir_base_url => furl, :resource_type => rt, :fhir_resource_id => Faker::Number.number(2))
+        rl = Role.find_by_role("Resource Creator")
+        rd = FactoryGirl.create(:role_definition, :profile => profile, :role => rl)
+        ra = FactoryGirl.create(:resource_authorization, :role_definition => rd, :resource => rs)
+        
+        visit edit_resource_path(rs)
+        expect(current_path).to eq(edit_resource_path(rs))
+        expect(page).to have_http_status(200)
+        click_link("Import")
+        expect(page).to have_content("Resource successfully imported.")
+      end
+  
+      it "must import Condition resource data" do
+        furl = FhirBaseUrl.first()
+        rt = ResourceType.where(:resource_type => "Condition").first()
+        rs = FactoryGirl.create(:resource, :fhir_base_url => furl, :resource_type => rt, :fhir_resource_id => Faker::Number.number(2))
+        rl = Role.find_by_role("Resource Creator")
+        rd = FactoryGirl.create(:role_definition, :profile => profile, :role => rl)
+        ra = FactoryGirl.create(:resource_authorization, :role_definition => rd, :resource => rs)
+        
+        visit edit_resource_path(rs)
+        expect(current_path).to eq(edit_resource_path(rs))
+        expect(page).to have_http_status(200)
+        click_link("Import")
+        expect(page).to have_content("Resource successfully imported.")      end
+  
+      it "must import Encounter resource data" do
+        furl = FhirBaseUrl.first()
+        rt = ResourceType.where(:resource_type => "Encounter").first()
+        rs = FactoryGirl.create(:resource, :fhir_base_url => furl, :resource_type => rt, :fhir_resource_id => Faker::Number.number(2))
+        rl = Role.find_by_role("Resource Creator")
+        rd = FactoryGirl.create(:role_definition, :profile => profile, :role => rl)
+        ra = FactoryGirl.create(:resource_authorization, :role_definition => rd, :resource => rs)
+        
+        visit edit_resource_path(rs)
+        expect(current_path).to eq(edit_resource_path(rs))
+        expect(page).to have_http_status(200)
+        click_link("Import")
+        expect(page).to have_content("Resource successfully imported.")
+      end
+  
+      it "must import Medication resource data" do
+        furl = FhirBaseUrl.first()
+        rt = ResourceType.where(:resource_type => "Medication").first()
+        rs = FactoryGirl.create(:resource, :fhir_base_url => furl, :resource_type => rt, :fhir_resource_id => 528264)
+        rl = Role.find_by_role("Resource Creator")
+        rd = FactoryGirl.create(:role_definition, :profile => profile, :role => rl)
+        ra = FactoryGirl.create(:resource_authorization, :role_definition => rd, :resource => rs)
+        
+        visit edit_resource_path(rs)
+        expect(current_path).to eq(edit_resource_path(rs))
+        expect(page).to have_http_status(200)
+        click_link("Import")
+        expect(page).to have_content("Resource successfully imported.")
+      end
+  
+      it "must import MedicationDispense resource data" do
+        furl = FhirBaseUrl.first()
+        rt = ResourceType.where(:resource_type => "MedicationDispense").first()
+        rs = FactoryGirl.create(:resource, :fhir_base_url => furl, :resource_type => rt, :fhir_resource_id => 786)
+        rl = Role.find_by_role("Resource Creator")
+        rd = FactoryGirl.create(:role_definition, :profile => profile, :role => rl)
+        ra = FactoryGirl.create(:resource_authorization, :role_definition => rd, :resource => rs)
+        
+        visit edit_resource_path(rs)
+        expect(current_path).to eq(edit_resource_path(rs))
+        expect(page).to have_http_status(200)
+        click_link("Import")
+        expect(page).to have_content("Resource successfully imported.")
+      end
+  
+      it "must import MedicationPrescription resource data" do
+        furl = FhirBaseUrl.first()
+        rt = ResourceType.where(:resource_type => "MedicationPrescription").first()
+        rs = FactoryGirl.create(:resource, :fhir_base_url => furl, :resource_type => rt, :fhir_resource_id => Faker::Number.number(2))
+        rl = Role.find_by_role("Resource Creator")
+        rd = FactoryGirl.create(:role_definition, :profile => profile, :role => rl)
+        ra = FactoryGirl.create(:resource_authorization, :role_definition => rd, :resource => rs)
+        
+        visit edit_resource_path(rs)
+        expect(current_path).to eq(edit_resource_path(rs))
+        expect(page).to have_http_status(200)
+        click_link("Import")
+        expect(page).to have_content("Resource successfully imported.")
+      end
+  
+      it "must import Observation resource data" do
+        furl = FhirBaseUrl.first()
+        rt = ResourceType.where(:resource_type => "Observation").first()
+        rs = FactoryGirl.create(:resource, :fhir_base_url => furl, :resource_type => rt, :fhir_resource_id => Faker::Number.number(2))
+        rl = Role.find_by_role("Resource Creator")
+        rd = FactoryGirl.create(:role_definition, :profile => profile, :role => rl)
+        ra = FactoryGirl.create(:resource_authorization, :role_definition => rd, :resource => rs)
+        
+        visit edit_resource_path(rs)
+        expect(current_path).to eq(edit_resource_path(rs))
+        expect(page).to have_http_status(200)
+        click_link("Import")
+        expect(page).to have_content("Resource successfully imported.")
+      end
+      pending("Other resource operations")
     end
   end
 end

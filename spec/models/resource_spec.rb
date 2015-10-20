@@ -24,3 +24,4 @@ RSpec.describe Resource, :type => :model do
     expect(FactoryGirl.build(:resource, :resource_type => rt, :fhir_base_url => furl, :fhir_resource_id => 1)).to be_invalid
   end
 end
+
