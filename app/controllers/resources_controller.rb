@@ -112,13 +112,13 @@ class ResourcesController < ApplicationController
   # POST /resources.json
   def create
     @resource = Resource.new(params[:resource])
-
+    reason = nil
     if @resource.save
       rl = Role.where(:role => "Resource Creator").first()
       if @resource.resource_type.resource_type == "Patient"
         rd = RoleDefinition.where(:profile_id => session[:user_id], :role_id => rl, :patient_resource_id => @resource.id).first_or_create()
         ra = ResourceAuthorization.where(:role_definition_id => rd.id, :resource_id => @resource.id).first_or_create()
-        if !update_patient_resources.nil?
+        if !(reason = update_patient_resources).nil?
           @resource.destroy
         end
       else
@@ -132,7 +132,7 @@ class ResourcesController < ApplicationController
         format.html { flash[:"alert-success"] = 'Resource was successfully created.'; redirect_to edit_resource_path(@resource) }
         format.json { render json: @resource, status: :created, location: @resource }
       else
-        format.html { flash[:"alert-warning"] = 'Error creating resource.'; render action: "new" }
+        format.html { flash[:"alert-warning"] = 'Error creating resource: ' + reason.to_s; render action: "new" }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
@@ -172,7 +172,11 @@ class ResourcesController < ApplicationController
   private
   
   def update_patient_resources
+    begin
     bundle = JSON.parse(RestClient.get @resource.fhir_base_url.fhir_base_url + @resource.resource_type.resource_type, { :params => { :_id => @resource.fhir_resource_id }, :accept => :json })
+    rescue
+      return 'Unable to reach FHIR resource. Please check the URL and resource accessibility.'
+    end
     import_bundle(bundle, @resource, @resource.resource_type)
   end
   

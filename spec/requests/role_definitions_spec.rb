@@ -22,6 +22,27 @@ RSpec.describe "RoleDefinitions", :type => :request do
         expect(current_path).to eq(role_definitions_path)
         expect(page).to have_http_status(200)
       end
+      it "can enter a new role definition" do
+        pf = FactoryGirl::create(:profile)
+        rs = FactoryGirl::create(:resource, :resource_type => ResourceType.where(:resource_type => "Patient").first())
+        
+        visit role_definitions_path
+        expect(page).to have_content("New Role definition")
+        click_link ("New Role definition")
+        expect(current_path).to eq(new_role_definition_path)
+        
+        expect(page).to have_content(:role_definition_profile_id)
+        expect(page).to have_content(:role_definition_role_id)
+        expect(page).to have_content(:role_definition_patient_resource_id)
+        
+        select pf.full_name, :from => :role_definition_profile_id
+        select "Designated Representative", :from => :role_definition_role_id
+        select rs.resource_label, :from => :role_definition_patient_resource_id
+        
+        click_button "Create Role definition"
+        expect(page).to have_content "Role definition was successfully created"
+        
+      end
     end
   end
 end

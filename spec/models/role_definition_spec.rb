@@ -25,5 +25,22 @@ RSpec.describe RoleDefinition, :type => :model do
     expect(RoleDefinition.exists?(rd)).to be(false)
   end
   
+  it "must not allow duplicate roles to be entered for the same profile and patient" do
+    rl = FactoryGirl.create(:role)
+    pt = FactoryGirl.create(:resource, :resource_type => ResourceType.where(:resource_type => "Patient").first())
+    pf = FactoryGirl.create(:profile)
+    
+    expect(FactoryGirl.create(:role_definition, :role => rl, :patient_resource => pt, :profile => pf)).to be_valid
+    expect(FactoryGirl.build(:role_definition, :role => rl, :patient_resource => pt, :profile => pf)).to be_invalid
+  end
+  
+  it "validates that the resource assigned to the patient_resource_id has a resource_type of Patient" do
+    rl = FactoryGirl.create(:role)
+    pt = FactoryGirl.create(:resource, :resource_type => ResourceType.where(:resource_type => "Patient").first())
+    npt = FactoryGirl.create(:resource)
+    pf = FactoryGirl.create(:profile)
+    expect(FactoryGirl.build(:role_definition, :role => rl, :patient_resource => pt, :profile => pf)).to be_valid
+    expect(FactoryGirl.build(:role_definition, :role => rl, :patient_resource => npt, :profile => pf)).to be_invalid
+  end
   
 end

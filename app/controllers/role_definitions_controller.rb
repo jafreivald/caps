@@ -46,7 +46,7 @@ class RoleDefinitionsController < ApplicationController
 
     respond_to do |format|
       if @role_definition.save
-        format.html { redirect_to @role_definition, notice: 'Role definition was successfully created.' }
+        format.html { flash[:"alert-success"] = 'Role definition was successfully created.'; redirect_to edit_role_definition_path(@role_definition) }
         format.json { render json: @role_definition, status: :created, location: @role_definition }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class RoleDefinitionsController < ApplicationController
 
     respond_to do |format|
       if @role_definition.update_attributes(params[:role_definition])
-        format.html { redirect_to @role_definition, notice: 'Role definition was successfully updated.' }
+        format.html { flash[:"alert-success"] = 'Role definition was successfully updated.'; redirect_to edit_role_definition_path(@role_definition) }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

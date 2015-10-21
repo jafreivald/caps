@@ -39,6 +39,18 @@ RSpec.describe "Resources", :type => :request do
         expect(page).to have_content("Resource was successfully created.")
       end
       
+      it "provides a nice error message if unable to reach the resource on creating and importing a patient" do
+        visit new_resource_path
+        expect(current_path).to eq(new_resource_path)
+        expect(page).to have_http_status(200)
+        select "http://localhost/", :from => "resource_fhir_base_url_id"
+        select "Patient", :from => "resource_resource_type_id"
+        patient_id = Faker::Number.number(2)
+        fill_in "Fhir resource", :with => patient_id.to_s
+        click_button "Create Resource"
+        expect(page).to have_content("Unable to reach FHIR resource. Please check the URL and resource accessibility.")
+      end
+      
       it "can select the patient from the index after it is loaded." do
         visit new_resource_path
         expect(current_path).to eq(new_resource_path)
