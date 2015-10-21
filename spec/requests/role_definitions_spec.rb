@@ -41,7 +41,25 @@ RSpec.describe "RoleDefinitions", :type => :request do
         
         click_button "Create Role definition"
         expect(page).to have_content "Role definition was successfully created"
+      end
+      it "can edit and existing role definition" do
+        rd = FactoryGirl::create(:role_definition)
+        pr = FactoryGirl::create(:resource, :resource_type => ResourceType.where(:resource_type => "Patient").first())
+        pf = FactoryGirl::create(:profile)
+        rl = FactoryGirl::create(:role)
         
+        visit role_definition_path(rd)
+        expect(page).to have_content("Editing role_definition")
+        expect(page).to have_content(:role_definition_profile_id)
+        expect(page).to have_content(:role_definition_role_id)
+        expect(page).to have_content(:role_definition_patient_resource_id)
+        
+        select pf.full_name, :from => :role_definition_profile_id
+        select rl.role, :from => :role_definition_role_id
+        select pr.resource_label, :from => :role_definition_patient_resource_id
+        
+        click_button "Update Role definition"
+        expect(page).to have_content "Role definition was successfully updated"
       end
     end
   end
