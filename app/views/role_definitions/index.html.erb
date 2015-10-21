@@ -3,16 +3,18 @@
 <table class="display">
     <thead>
         <tr>
+            <th>Profile</th>
             <th>Role</th>
-            <th>Role Profile</th>
+            <th>Patient</th>
             <th>Modify</th>
         </tr>
     </thead>
     <tbody>
         <% @role_definitions.each do |role_definition| %>
           <tr>
-              <td><%= role_definition.role.role %></td>
               <td><%= role_definition.profile.full_name %></td>
+              <td><%= role_definition.role.role %></td>
+              <td><%= role_definition.patient_resource.resource_label %></td>
               <td><%= link_to 'Edit', edit_role_definition_path(role_definition) %>
                   <%= link_to 'Destroy', role_definition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
