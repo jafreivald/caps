@@ -46,7 +46,7 @@ class ResourceAuthorizationsController < ApplicationController
 
     respond_to do |format|
       if @resource_authorization.save
-        format.html { redirect_to @resource_authorization, notice: 'Resource authorization was successfully created.' }
+        format.html { flash[:'alert-success'] = 'Resource authorization was successfully created.'; redirect_to edit_resource_authorization_path(@resource_authorization) }
         format.json { render json: @resource_authorization, status: :created, location: @resource_authorization }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class ResourceAuthorizationsController < ApplicationController
 
     respond_to do |format|
       if @resource_authorization.update_attributes(params[:resource_authorization])
-        format.html { redirect_to @resource_authorization, notice: 'Resource authorization was successfully updated.' }
+        format.html { flash[:'alert-success'] = 'Resource authorization was successfully updated.'; redirect_to edit_resource_authorization_path(@resource_authorization)}
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -20,4 +20,8 @@ RSpec.describe ResourceAuthorization, :type => :model do
     expect(rs.persisted?).to be(false)
     expect(ResourceAuthorization.exists?(ra)).to be(false)    
   end
+  it "must not allow duplicate authorizations" do
+    expect(ra = FactoryGirl.create(:resource_authorization)).to be_valid
+    expect(FactoryGirl.build(:resource_authorization, :role_definition_id => ra.role_definition_id, :resource_id => ra.resource_id)).to be_invalid
+  end
 end

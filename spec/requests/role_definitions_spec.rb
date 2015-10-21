@@ -17,7 +17,7 @@ RSpec.describe "RoleDefinitions", :type => :request do
         fill_in "Password", :with => 'pw'
         click_button "Log In"
       }
-      it "can visit the page" do
+      it "can visit the index page" do
         visit role_definitions_path
         expect(current_path).to eq(role_definitions_path)
         expect(page).to have_http_status(200)

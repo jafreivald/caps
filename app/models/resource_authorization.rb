@@ -7,4 +7,5 @@ class ResourceAuthorization < ActiveRecord::Base
   belongs_to :resource
   
   validates :role_definition, :resource, :presence => true
+  validates_uniqueness_of :resource_id, :scope => [:role_definition_id]
 end
